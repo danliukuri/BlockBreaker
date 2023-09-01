@@ -468,8 +468,9 @@ GameObject:
   m_Component:
   - component: {fileID: 553382427}
   - component: {fileID: 553382426}
-  - component: {fileID: 553382428}
   - component: {fileID: 553382429}
+  - component: {fileID: 553382428}
+  - component: {fileID: 553382430}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -491,8 +492,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 553382428}
   - {fileID: 553382429}
+  - {fileID: 553382428}
+  - {fileID: 553382430}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -538,7 +540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ada2539e6ab31de4e9f239beccba25fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerObjectsParent: {fileID: 0}
   spawnPoint: {fileID: 895455428}
   factoryConfig: {fileID: 11400000, guid: 3a6a425914bb41b4a81138784e7c11c8, type: 2}
   poolConfig: {fileID: 11400000, guid: 06ec9876ca2bd0b4c9d1b93af344581a, type: 2}
@@ -554,6 +555,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 359a84d59182eb1429e23e4b2736f325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &553382430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553382425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddaefd871566499aa6f3909bf9ef3718, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnPoint: {fileID: 1186572834}
+  factoryConfig: {fileID: 11400000, guid: 94a8345eef12734449bec998fa4406ca, type: 2}
+  poolConfig: {fileID: 11400000, guid: 73714c488b88c1e4c93ffacc0fb29806, type: 2}
 --- !u!1001 &610162866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1245,6 +1261,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7494367456039311691, guid: 73cdefb17f78e7f4ea49cc0a7b6907e4, type: 3}
   m_PrefabInstance: {fileID: 1159546977}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1186572833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1186572834}
+  m_Layer: 0
+  m_Name: PlayerCarpetSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1186572834
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186572833}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1223022994
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1584,63 +1631,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7494367456039311691, guid: 73cdefb17f78e7f4ea49cc0a7b6907e4, type: 3}
   m_PrefabInstance: {fileID: 2000934394}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &2014660662
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3462529732031886695, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5528987160765120455, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
-      propertyPath: m_Name
-      value: PlayerCarpet
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2197d6b5f8a941b4bb4c46ffc2801e85, type: 3}
 --- !u!1001 &6139373233444436652
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1692,4 +1682,4 @@ SceneRoots:
   - {fileID: 1227360474}
   - {fileID: 615351566}
   - {fileID: 895455428}
-  - {fileID: 2014660662}
+  - {fileID: 1186572834}

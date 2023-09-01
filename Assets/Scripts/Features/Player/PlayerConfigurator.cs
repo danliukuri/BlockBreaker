@@ -1,7 +1,7 @@
 ﻿using BlockBreaker.Infrastructure.Services;
 using UnityEngine;
 
-namespace BlockBreaker.Features.Player.Configurators
+namespace BlockBreaker.Features.Player
 {
     public class PlayerConfigurator : IComponentConfigurator<PlayerMarker>
     {
