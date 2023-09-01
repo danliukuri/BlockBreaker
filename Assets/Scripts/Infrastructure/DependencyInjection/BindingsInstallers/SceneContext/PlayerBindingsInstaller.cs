@@ -1,5 +1,6 @@
 using BlockBreaker.Data.Static.Configuration;
 using BlockBreaker.Features.Player;
+using BlockBreaker.Features.Player.Configurators;
 using BlockBreaker.Infrastructure.Factories.Components;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -10,13 +11,25 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
     public class PlayerBindingsInstaller : MonoInstaller
     {
         [SerializeField] private Transform playerObjectsParent;
+        [SerializeField] private Transform spawnPoint;
+
         [SerializeField] private FactoryConfig factoryConfig;
         [SerializeField] private PoolConfig poolConfig;
 
         public override void InstallBindings()
         {
+            BindConfigurator();
             BindFactory();
             BindObjectPool();
+        }
+
+        private void BindConfigurator()
+        {
+            Container
+                .BindInterfacesTo<PlayerConfigurator>()
+                .AsSingle()
+                .WithArguments(spawnPoint)
+                .WhenInjectedInto<ComponentFactory<PlayerMarker>>();
         }
 
         private void BindFactory()
