@@ -1,5 +1,5 @@
 using BlockBreaker.Data.Static.Configuration;
-using BlockBreaker.Features.Player;
+using BlockBreaker.Features.Player.Carpet;
 using BlockBreaker.Infrastructure.Factories.Components;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -7,7 +7,7 @@ using Zenject;
 
 namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.SceneContext
 {
-    public class PlayerBindingsInstaller : MonoInstaller
+    public class PlayerCarpetBindingsInstaller : MonoInstaller
     {
         [SerializeField] private Transform spawnPoint;
 
@@ -24,10 +24,10 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         private void BindConfigurator()
         {
             Container
-                .BindInterfacesTo<PlayerConfigurator>()
+                .BindInterfacesTo<PlayerCarpetConfigurator>()
                 .AsSingle()
                 .WithArguments(spawnPoint)
-                .WhenInjectedInto<ComponentFactory<PlayerMarker>>();
+                .WhenInjectedInto<ComponentFactory<PlayerCarpetMarker>>();
         }
 
         private void BindFactory()
@@ -36,9 +36,9 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<FactoryConfig>()
                 .FromScriptableObject(factoryConfig)
                 .AsCached()
-                .WhenInjectedInto<ComponentFactory<PlayerMarker>>();
+                .WhenInjectedInto<ComponentFactory<PlayerCarpetMarker>>();
 
-            Container.BindInterfacesTo<ComponentFactory<PlayerMarker>>().AsSingle();
+            Container.BindInterfacesTo<ComponentFactory<PlayerCarpetMarker>>().AsSingle();
         }
 
         private void BindObjectPool()
@@ -47,12 +47,12 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<PoolConfig>()
                 .FromScriptableObject(poolConfig)
                 .AsCached()
-                .WhenInjectedInto<ComponentPoolFactory<PlayerMarker>>();
+                .WhenInjectedInto<ComponentPoolFactory<PlayerCarpetMarker>>();
 
             Container
-                .Bind<IObjectPool<PlayerMarker>>()
-                .To<ObjectPool<PlayerMarker>>()
-                .FromFactory<ComponentPoolFactory<PlayerMarker>>()
+                .Bind<IObjectPool<PlayerCarpetMarker>>()
+                .To<ObjectPool<PlayerCarpetMarker>>()
+                .FromFactory<ComponentPoolFactory<PlayerCarpetMarker>>()
                 .AsSingle();
         }
     }
