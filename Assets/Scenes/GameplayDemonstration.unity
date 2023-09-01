@@ -469,6 +469,7 @@ GameObject:
   - component: {fileID: 553382427}
   - component: {fileID: 553382426}
   - component: {fileID: 553382428}
+  - component: {fileID: 553382429}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -491,6 +492,7 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 553382428}
+  - {fileID: 553382429}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -539,6 +541,18 @@ MonoBehaviour:
   playerObjectsParent: {fileID: 0}
   factoryConfig: {fileID: 11400000, guid: 3a6a425914bb41b4a81138784e7c11c8, type: 2}
   poolConfig: {fileID: 11400000, guid: 06ec9876ca2bd0b4c9d1b93af344581a, type: 2}
+--- !u!114 &553382429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 553382425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 359a84d59182eb1429e23e4b2736f325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &610162866
 PrefabInstance:
   m_ObjectHideFlags: 0
