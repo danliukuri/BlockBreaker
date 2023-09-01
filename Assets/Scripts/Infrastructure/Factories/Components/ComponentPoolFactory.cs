@@ -32,7 +32,7 @@ namespace BlockBreaker.Infrastructure.Factories.Components
 
         public ObjectPool<TComponent> Create()
         {
-            var pool = new ObjectPool<TComponent>(_componentFactory.Create, _componentFactory.ActivateGameObject,
+            var pool = new ObjectPool<TComponent>(_componentFactory.Create, _componentFactory.ConfigureGameObject,
                 _componentFactory.DeactivateGameObject, _componentFactory.DestroyGameObject,
                 _poolConfig.ThrowErrorIfItemAlreadyInPoolWhenRelease, _poolConfig.StartCapacity, _poolConfig.MaxSize);
             

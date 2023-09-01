@@ -1,4 +1,5 @@
 using BlockBreaker.Data.Static.Configuration;
+using BlockBreaker.Infrastructure.Services;
 using BlockBreaker.Utilities.Extensions.Unity;
 using UnityEngine;
 using Zenject;
@@ -9,8 +10,9 @@ namespace BlockBreaker.Infrastructure.Factories.Components
     {
         private readonly IInstantiator _instantiator;
 
-        public DependentComponentFactory(IFactoryConfig config, Transform objectParent, IInstantiator instantiator) :
-            base(config, objectParent) => _instantiator = instantiator;
+        public DependentComponentFactory(IFactoryConfig config, IComponentConfigurator<TComponent> configurator, 
+            IInstantiator instantiator, Transform objectParent = default) :
+            base(config, configurator, objectParent) => _instantiator = instantiator;
 
         public override TComponent Create() =>
             _config.Prefab.AsInactive(_instantiator.InstantiatePrefabForComponent<TComponent>, _objectParent);
