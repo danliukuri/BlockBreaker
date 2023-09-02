@@ -27,8 +27,13 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             PlayerCarpetDataProvider carpet = _playerCarpetPool.Get();
             Transform playerTransform = player.transform;
 
+            var playerSizeCalculator = new PLayerSizeCalculator(player.Config, carpet);
             var playerSizeSetter = new PlayerSizeSetter(playerTransform);
             var carpetSizeSetter = new PlayerCarpetSizeSetter(carpet.transform);
+
+            float newPlayerSize = playerSizeCalculator.CalculateSize(_blockObstacles);
+            playerSizeSetter.Set(newPlayerSize);
+            carpetSizeSetter.Set(newPlayerSize);
         }
     }
 }
