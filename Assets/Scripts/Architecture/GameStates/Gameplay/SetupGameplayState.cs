@@ -1,3 +1,4 @@
+using BlockBreaker.Features.Obstacle;
 using BlockBreaker.Features.Player;
 using BlockBreaker.Features.Player.Carpet;
 using BlockBreaker.Utilities.Patterns.State;
@@ -7,15 +8,16 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
 {
     public class SetupGameplayState : IEnterableState
     {
-        private readonly IObjectPool<PlayerMarker> _playerPool;
+        private readonly ObstacleDataProvider[] _blockObstacles;
         private readonly IObjectPool<PlayerCarpetMarker> _playerCarpetPool;
+        private readonly IObjectPool<PlayerMarker> _playerPool;
 
-        public SetupGameplayState(IObjectPool<PlayerMarker> playerPool,
-            IObjectPool<PlayerCarpetMarker> playerCarpetPool)
+        public SetupGameplayState(IObjectPool<PlayerCarpetMarker> playerCarpetPool,
+            IObjectPool<PlayerMarker> playerPool, ObstacleDataProvider[] blockObstacles)
         {
             _playerCarpetPool = playerCarpetPool;
-            _playerPool =
-                playerPool;
+            _playerPool = playerPool;
+            _blockObstacles = blockObstacles;
         }
 
         public void Enter()
