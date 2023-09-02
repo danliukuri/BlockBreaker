@@ -1,4 +1,5 @@
 using BlockBreaker.Data.Static.Configuration;
+using BlockBreaker.Data.Static.Configuration.Player.Carpet;
 using BlockBreaker.Features.Player.Carpet;
 using BlockBreaker.Infrastructure.Factories.Components;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
     {
         [SerializeField] private Transform spawnPoint;
 
+        [SerializeField] private PlayerCarpetConfig playerCarpetConfig;
         [SerializeField] private FactoryConfig factoryConfig;
         [SerializeField] private PoolConfig poolConfig;
 
@@ -19,6 +21,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindConfigurator();
             BindFactory();
             BindObjectPool();
+            BindConfig();
         }
 
         private void BindConfigurator()
@@ -27,7 +30,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<PlayerCarpetConfigurator>()
                 .AsSingle()
                 .WithArguments(spawnPoint)
-                .WhenInjectedInto<ComponentFactory<PlayerCarpetMarker>>();
+                .WhenInjectedInto<DependentComponentFactory<PlayerCarpetDataProvider>>();
         }
 
         private void BindFactory()
@@ -36,9 +39,9 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<FactoryConfig>()
                 .FromScriptableObject(factoryConfig)
                 .AsCached()
-                .WhenInjectedInto<ComponentFactory<PlayerCarpetMarker>>();
+                .WhenInjectedInto<DependentComponentFactory<PlayerCarpetDataProvider>>();
 
-            Container.BindInterfacesTo<ComponentFactory<PlayerCarpetMarker>>().AsSingle();
+            Container.BindInterfacesTo<DependentComponentFactory<PlayerCarpetDataProvider>>().AsSingle();
         }
 
         private void BindObjectPool()
@@ -47,13 +50,22 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<PoolConfig>()
                 .FromScriptableObject(poolConfig)
                 .AsCached()
-                .WhenInjectedInto<ComponentPoolFactory<PlayerCarpetMarker>>();
+                .WhenInjectedInto<ComponentPoolFactory<PlayerCarpetDataProvider>>();
 
             Container
-                .Bind<IObjectPool<PlayerCarpetMarker>>()
-                .To<ObjectPool<PlayerCarpetMarker>>()
-                .FromFactory<ComponentPoolFactory<PlayerCarpetMarker>>()
+                .Bind<IObjectPool<PlayerCarpetDataProvider>>()
+                .To<ObjectPool<PlayerCarpetDataProvider>>()
+                .FromFactory<ComponentPoolFactory<PlayerCarpetDataProvider>>()
                 .AsSingle();
+        }
+
+        private void BindConfig()
+        {
+            Container
+                .BindInterfacesAndSelfTo<PlayerCarpetConfig>()
+                .FromScriptableObject(playerCarpetConfig)
+                .AsCached()
+                .WhenInjectedInto<PlayerCarpetDataProvider>();
         }
     }
 }

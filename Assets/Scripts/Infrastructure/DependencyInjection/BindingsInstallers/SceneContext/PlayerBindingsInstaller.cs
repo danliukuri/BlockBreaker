@@ -1,4 +1,5 @@
 using BlockBreaker.Data.Static.Configuration;
+using BlockBreaker.Data.Static.Configuration.Player;
 using BlockBreaker.Features.Player;
 using BlockBreaker.Infrastructure.Factories.Components;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
     {
         [SerializeField] private Transform spawnPoint;
 
+        [SerializeField] private PlayerConfig playerConfig;
         [SerializeField] private FactoryConfig factoryConfig;
         [SerializeField] private PoolConfig poolConfig;
 
@@ -19,6 +21,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindConfigurator();
             BindFactory();
             BindObjectPool();
+            BindConfig();
         }
 
         private void BindConfigurator()
@@ -27,7 +30,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<PlayerConfigurator>()
                 .AsSingle()
                 .WithArguments(spawnPoint)
-                .WhenInjectedInto<ComponentFactory<PlayerMarker>>();
+                .WhenInjectedInto<DependentComponentFactory<PlayerDataProvider>>();
         }
 
         private void BindFactory()
@@ -36,9 +39,9 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<FactoryConfig>()
                 .FromScriptableObject(factoryConfig)
                 .AsCached()
-                .WhenInjectedInto<ComponentFactory<PlayerMarker>>();
+                .WhenInjectedInto<DependentComponentFactory<PlayerDataProvider>>();
 
-            Container.BindInterfacesTo<ComponentFactory<PlayerMarker>>().AsSingle();
+            Container.BindInterfacesTo<DependentComponentFactory<PlayerDataProvider>>().AsSingle();
         }
 
         private void BindObjectPool()
@@ -47,13 +50,22 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<PoolConfig>()
                 .FromScriptableObject(poolConfig)
                 .AsCached()
-                .WhenInjectedInto<ComponentPoolFactory<PlayerMarker>>();
+                .WhenInjectedInto<ComponentPoolFactory<PlayerDataProvider>>();
 
             Container
-                .Bind<IObjectPool<PlayerMarker>>()
-                .To<ObjectPool<PlayerMarker>>()
-                .FromFactory<ComponentPoolFactory<PlayerMarker>>()
+                .Bind<IObjectPool<PlayerDataProvider>>()
+                .To<ObjectPool<PlayerDataProvider>>()
+                .FromFactory<ComponentPoolFactory<PlayerDataProvider>>()
                 .AsSingle();
+        }
+
+        private void BindConfig()
+        {
+            Container
+                .BindInterfacesAndSelfTo<PlayerConfig>()
+                .FromScriptableObject(playerConfig)
+                .AsCached()
+                .WhenInjectedInto<PlayerDataProvider>();
         }
     }
 }
