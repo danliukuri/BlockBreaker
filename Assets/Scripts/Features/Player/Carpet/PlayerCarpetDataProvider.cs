@@ -6,9 +6,9 @@ namespace BlockBreaker.Features.Player.Carpet
 {
     public class PlayerCarpetDataProvider : MonoBehaviour
     {
-        public PlayerCarpetConfig CarpetData { get; private set; }
+        public PlayerCarpetConfig Config { get; private set; }
 
         [Inject]
-        public void Construct(PlayerCarpetConfig playerCarpetConfig) => CarpetData = playerCarpetConfig;
+        public void Construct(PlayerCarpetConfig playerCarpetConfig) => Config = playerCarpetConfig;
     }
 }

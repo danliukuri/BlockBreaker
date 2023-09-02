@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PlayerConfig
   m_EditorClassIdentifier: 
   <HealthPointsToScaleRatio>k__BackingField: 0.2
-  <MinSize>k__BackingField: {x: 0.5, y: 0.5, z: 0.5}
+  <MinSize>k__BackingField: 0.5
   <SizeReserveProportion>k__BackingField: 0.2

@@ -2,6 +2,7 @@ using BlockBreaker.Features.Obstacle;
 using BlockBreaker.Features.Player;
 using BlockBreaker.Features.Player.Carpet;
 using BlockBreaker.Utilities.Patterns.State;
+using UnityEngine;
 using UnityEngine.Pool;
 
 namespace BlockBreaker.Architecture.GameStates.Gameplay
@@ -23,12 +24,11 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
         public void Enter()
         {
             PlayerDataProvider player = _playerPool.Get();
-            PlayerCarpetDataProvider playerCarpet = _playerCarpetPool.Get();
+            PlayerCarpetDataProvider carpet = _playerCarpetPool.Get();
+            Transform playerTransform = player.transform;
 
-            var playerSizeChanger = new PlayerSizeChanger(player.transform, player.PlayerConfig);
-            playerSizeChanger.IncreaseSize(_blockObstacles);
-            var playerCarpetSizeChanger = new PlayerCarpetSizeChanger(playerCarpet.transform);
-            playerCarpetSizeChanger.IncreaseSize(player.transform.localScale);
+            var playerSizeSetter = new PlayerSizeSetter(playerTransform);
+            var carpetSizeSetter = new PlayerCarpetSizeSetter(carpet.transform);
         }
     }
 }

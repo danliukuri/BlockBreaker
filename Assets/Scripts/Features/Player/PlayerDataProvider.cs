@@ -6,9 +6,9 @@ namespace BlockBreaker.Features.Player
 {
     public class PlayerDataProvider : MonoBehaviour
     {
-        public PlayerConfig PlayerConfig { get; private set; }
+        public PlayerConfig Config { get; private set; }
 
         [Inject]
-        public void Construct(PlayerConfig playerConfig) => PlayerConfig = playerConfig;
+        public void Construct(PlayerConfig playerConfig) => Config = playerConfig;
     }
 }

@@ -6,9 +6,9 @@ namespace BlockBreaker.Features.Obstacle
 {
     public class ObstacleDataProvider : MonoBehaviour
     {
-        public ObstacleConfig Obstacle { get; private set; }
+        public ObstacleConfig Config { get; private set; }
 
         [Inject]
-        public void Construct(ObstacleConfig obstacle) => Obstacle = obstacle;
+        public void Construct(ObstacleConfig obstacle) => Config = obstacle;
     }
 }
