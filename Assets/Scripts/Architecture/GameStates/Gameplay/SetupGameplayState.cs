@@ -9,10 +9,10 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
     public class SetupGameplayState : IEnterableState
     {
         private readonly ObstacleDataProvider[] _blockObstacles;
-        private readonly IObjectPool<PlayerCarpetMarker> _playerCarpetPool;
+        private readonly IObjectPool<PlayerCarpetDataProvider> _playerCarpetPool;
         private readonly IObjectPool<PlayerDataProvider> _playerPool;
 
-        public SetupGameplayState(IObjectPool<PlayerCarpetMarker> playerCarpetPool,
+        public SetupGameplayState(IObjectPool<PlayerCarpetDataProvider> playerCarpetPool,
             IObjectPool<PlayerDataProvider> playerPool, ObstacleDataProvider[] blockObstacles)
         {
             _playerCarpetPool = playerCarpetPool;
@@ -23,7 +23,7 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
         public void Enter()
         {
             PlayerDataProvider player = _playerPool.Get();
-            PlayerCarpetMarker playerCarpet = _playerCarpetPool.Get();
+            PlayerCarpetDataProvider playerCarpet = _playerCarpetPool.Get();
 
             var playerSizeChanger = new PlayerSizeChanger(player.transform, player.PlayerConfig);
             playerSizeChanger.IncreaseSize(_blockObstacles);
