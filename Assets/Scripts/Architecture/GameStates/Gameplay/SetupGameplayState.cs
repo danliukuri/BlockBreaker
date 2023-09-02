@@ -22,8 +22,11 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
 
         public void Enter()
         {
-            _playerPool.Get();
-            _playerCarpetPool.Get();
+            PlayerDataProvider player = _playerPool.Get();
+            PlayerCarpetMarker playerCarpet = _playerCarpetPool.Get();
+
+            var playerSizeChanger = new PlayerSizeChanger(player.transform, player.PlayerConfig);
+            playerSizeChanger.IncreaseSize(_blockObstacles);
         }
     }
 }
