@@ -27,6 +27,8 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
 
             var playerSizeChanger = new PlayerSizeChanger(player.transform, player.PlayerConfig);
             playerSizeChanger.IncreaseSize(_blockObstacles);
+            var playerCarpetSizeChanger = new PlayerCarpetSizeChanger(playerCarpet.transform);
+            playerCarpetSizeChanger.IncreaseSize(player.transform.localScale);
         }
     }
 }
