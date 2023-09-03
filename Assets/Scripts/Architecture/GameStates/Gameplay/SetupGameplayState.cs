@@ -1,6 +1,7 @@
 using BlockBreaker.Data.Dynamic.Player;
 using BlockBreaker.Features.Obstacle;
 using BlockBreaker.Features.Player;
+using BlockBreaker.Features.Player.Bullet;
 using BlockBreaker.Features.Player.Carpet;
 using BlockBreaker.Infrastructure.Services;
 using BlockBreaker.Utilities.Patterns.State;
@@ -41,6 +42,7 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             player.SizeCalculator = new PLayerSizeCalculator(player, carpet);
             player.SizeSetter = new PlayerSizeSetter(player);
             player.CarpetSizeSetter = new PlayerCarpetSizeSetter(carpet.transform);
+            player.Shooter = new PlayerBulletShooter(player);
 
             float newPlayerSize = player.SizeCalculator.CalculateSize(_blockObstacles);
             player.SizeSetter.Set(newPlayerSize);

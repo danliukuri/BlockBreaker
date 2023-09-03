@@ -26,21 +26,22 @@ namespace BlockBreaker.Features.Player
         public void Enable()
         {
             _touchInputService.OnTouchBegan += InstantiateBullet;
-            _touchInputService.OnTouchEnded += OnTouchEnded;
+            _touchInputService.OnTouchEnded += ShootBullet;
             _touchInputService.OnTouchHold += ConvertPlayerSizeToBullet;
         }
 
         public void Disable()
         {
             _touchInputService.OnTouchBegan -= InstantiateBullet;
-            _touchInputService.OnTouchEnded -= OnTouchEnded;
+            _touchInputService.OnTouchEnded -= ShootBullet;
             _touchInputService.OnTouchHold -= ConvertPlayerSizeToBullet;
         }
 
         ~PlayerInputHandler() => Disable();
 
         private void InstantiateBullet() => _currentBullet = _bullets.Get();
-        private void OnTouchEnded() { } // TODO: Shoot the bullet
+
+        private void ShootBullet() => _player.Shooter.Shoot(_currentBullet.Data);
 
         private void ConvertPlayerSizeToBullet() => _player.SizeConverter.Convert(_currentBullet.Data,
             _currentBullet.Data.Config.CreationSpeed * Time.deltaTime);
