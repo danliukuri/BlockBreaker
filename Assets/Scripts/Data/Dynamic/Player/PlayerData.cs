@@ -13,6 +13,7 @@ namespace BlockBreaker.Data.Dynamic.Player
         public float Size { get; set; }
         public float Radius { get; set; }
 
+        public PlayerSizeConverter SizeConverter { get; set; }
         public PLayerSizeCalculator SizeCalculator { get; set; }
         public PlayerSizeSetter SizeSetter { get; set; }
         public PlayerCarpetSizeSetter CarpetSizeSetter { get; set; }
