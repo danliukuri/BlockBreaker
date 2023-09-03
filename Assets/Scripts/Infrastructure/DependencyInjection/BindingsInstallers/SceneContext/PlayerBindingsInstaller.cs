@@ -1,3 +1,4 @@
+using BlockBreaker.Architecture.GameStates.Gameplay;
 using BlockBreaker.Data.Static.Configuration;
 using BlockBreaker.Data.Static.Configuration.Player;
 using BlockBreaker.Features.Player;
@@ -22,6 +23,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindFactory();
             BindObjectPool();
             BindConfig();
+            BindInputHandler();
         }
 
         private void BindConfigurator()
@@ -66,6 +68,14 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .FromScriptableObject(playerConfig)
                 .AsCached()
                 .WhenInjectedInto<PlayerDataProvider>();
+        }
+
+        private void BindInputHandler()
+        {
+            Container
+                .BindInterfacesTo<PlayerInputHandler>()
+                .AsSingle()
+                .WhenInjectedInto<SetupGameplayState>();
         }
     }
 }
