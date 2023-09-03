@@ -3,6 +3,7 @@ using BlockBreaker.Data.Dynamic.Player;
 using BlockBreaker.Data.Static.Configuration;
 using BlockBreaker.Data.Static.Configuration.Player;
 using BlockBreaker.Features.Player;
+using BlockBreaker.Features.Player.Bullet;
 using BlockBreaker.Infrastructure.Factories.Components;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -85,7 +86,8 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             Container
                 .BindInterfacesAndSelfTo<PlayerData>()
                 .AsSingle()
-                .WhenInjectedInto(typeof(PlayerDataProvider), typeof(PlayerConfigurator));
+                .WhenInjectedInto(typeof(PlayerDataProvider), typeof(PlayerConfigurator),
+                    typeof(PlayerBulletConfigurator));
         }
     }
 }
