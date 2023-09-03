@@ -87,7 +87,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<PlayerData>()
                 .AsSingle()
                 .WhenInjectedInto(typeof(PlayerDataProvider), typeof(PlayerConfigurator),
-                    typeof(PlayerBulletConfigurator));
+                    typeof(PlayerBulletConfigurator), typeof(PlayerInputHandler));
         }
     }
 }

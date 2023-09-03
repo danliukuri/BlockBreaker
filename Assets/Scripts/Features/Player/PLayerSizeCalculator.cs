@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using BlockBreaker.Data.Dynamic.Player;
-using BlockBreaker.Data.Static.Configuration.Player;
 using BlockBreaker.Features.Obstacle;
 using BlockBreaker.Features.Player.Carpet;
 using UnityEngine;
