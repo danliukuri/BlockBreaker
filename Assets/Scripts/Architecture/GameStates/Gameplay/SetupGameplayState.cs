@@ -37,6 +37,7 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
 
         private void SetUpPlayer(PlayerData player, PlayerCarpetDataProvider carpet)
         {
+            player.SizeConverter = new PlayerSizeConverter(player);
             player.SizeCalculator = new PLayerSizeCalculator(player, carpet);
             player.SizeSetter = new PlayerSizeSetter(player);
             player.CarpetSizeSetter = new PlayerCarpetSizeSetter(carpet.transform);
