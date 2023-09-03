@@ -7,7 +7,9 @@ namespace BlockBreaker.Data.Static.Configuration.Player
     {
         private const float MinPercentage = 0f, MaxPercentage = 1f; 
         [field: SerializeField, Min(default)] public float HealthPointsToScaleRatio { get; private set; }
-        [field: SerializeField, Min(default)] public float MinSize { get; private set; }
+        [field: SerializeField, Min(default)] public float Size { get; private set; }
+        public float Radius => Size / 2f;
+        
         [field: SerializeField, Range(MinPercentage, MaxPercentage)]
         public float SizeReserveProportion { get; private set; }
     }

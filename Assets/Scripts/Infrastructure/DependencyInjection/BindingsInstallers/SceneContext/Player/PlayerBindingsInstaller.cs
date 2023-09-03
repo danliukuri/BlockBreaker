@@ -1,4 +1,5 @@
 using BlockBreaker.Architecture.GameStates.Gameplay;
+using BlockBreaker.Data.Dynamic.Player;
 using BlockBreaker.Data.Static.Configuration;
 using BlockBreaker.Data.Static.Configuration.Player;
 using BlockBreaker.Features.Player;
@@ -7,7 +8,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
 
-namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.SceneContext
+namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.SceneContext.Player
 {
     public class PlayerBindingsInstaller : MonoInstaller
     {
@@ -24,6 +25,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindObjectPool();
             BindConfig();
             BindInputHandler();
+            BindData();
         }
 
         private void BindConfigurator()
@@ -67,7 +69,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<PlayerConfig>()
                 .FromScriptableObject(playerConfig)
                 .AsCached()
-                .WhenInjectedInto<PlayerDataProvider>();
+                .WhenInjectedInto<PlayerConfigurator>();
         }
 
         private void BindInputHandler()
@@ -76,6 +78,14 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<PlayerInputHandler>()
                 .AsSingle()
                 .WhenInjectedInto<SetupGameplayState>();
+        }
+
+        private void BindData()
+        {
+            Container
+                .BindInterfacesAndSelfTo<PlayerData>()
+                .AsSingle()
+                .WhenInjectedInto(typeof(PlayerDataProvider), typeof(PlayerConfigurator));
         }
     }
 }

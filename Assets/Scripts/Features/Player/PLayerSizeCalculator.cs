@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using BlockBreaker.Data.Dynamic.Player;
 using BlockBreaker.Data.Static.Configuration.Player;
 using BlockBreaker.Features.Obstacle;
 using BlockBreaker.Features.Player.Carpet;
@@ -10,18 +11,18 @@ namespace BlockBreaker.Features.Player
     public class PLayerSizeCalculator
     {
         private readonly PlayerCarpetDataProvider _playerCarpet;
-        private readonly PlayerConfig _playerConfig;
+        private readonly PlayerData _player;
 
-        public PLayerSizeCalculator(PlayerConfig playerConfig, PlayerCarpetDataProvider playerCarpet)
+        public PLayerSizeCalculator(PlayerData player, PlayerCarpetDataProvider playerCarpet)
         {
-            _playerConfig = playerConfig;
+            _player = player;
             _playerCarpet = playerCarpet;
         }
 
         public float CalculateSize(ObstacleDataProvider[] obstacles)
         {
             float lastPlayerSize;
-            float currentPlayerSize = _playerConfig.MinSize;
+            float currentPlayerSize = _player.Size;
             
             do
             {
@@ -38,10 +39,10 @@ namespace BlockBreaker.Features.Player
             float carpetRadiusX = lastPlayerSize / 2f;
 
             IEnumerable<ObstacleDataProvider> obstaclesOnWay = CalculateObstaclesOnWay(obstacles, carpetRadiusX);
-            int obstaclesHealth = obstaclesOnWay.Sum(obstacleProvider => obstacleProvider.Config.HealthPoints);
+            int obstaclesHealth = obstaclesOnWay.Sum(obstacle => obstacle.Config.HealthPoints);
 
-            float playerSizeBoost = obstaclesHealth * _playerConfig.HealthPointsToScaleRatio;
-            return _playerConfig.MinSize + playerSizeBoost + playerSizeBoost * _playerConfig.SizeReserveProportion;
+            float playerSizeBoost = obstaclesHealth * _player.Config.HealthPointsToScaleRatio;
+            return _player.Size + playerSizeBoost + playerSizeBoost * _player.Config.SizeReserveProportion;
         }
 
         private IEnumerable<ObstacleDataProvider> CalculateObstaclesOnWay(IEnumerable<ObstacleDataProvider> obstacles,

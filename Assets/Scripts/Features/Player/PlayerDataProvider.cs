@@ -1,4 +1,4 @@
-﻿using BlockBreaker.Data.Static.Configuration.Player;
+﻿using BlockBreaker.Data.Dynamic.Player;
 using UnityEngine;
 using Zenject;
 
@@ -6,9 +6,9 @@ namespace BlockBreaker.Features.Player
 {
     public class PlayerDataProvider : MonoBehaviour
     {
-        public PlayerConfig Config { get; private set; }
+        public PlayerData Data { get; private set; }
 
         [Inject]
-        public void Construct(PlayerConfig playerConfig) => Config = playerConfig;
+        public void Construct(PlayerData data) => Data = data;
     }
 }
