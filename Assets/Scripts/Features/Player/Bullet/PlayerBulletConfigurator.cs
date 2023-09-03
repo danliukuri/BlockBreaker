@@ -21,6 +21,7 @@ namespace BlockBreaker.Features.Player.Bullet
         public void Configure(PlayerBulletDataProvider component)
         {
             Transform transform = _bullet.Transform = component.transform;
+            _bullet.Rigidbody = component.GetComponent<Rigidbody>();
             _bullet.Config = _config;
             _bullet.Size = _config.Size;
             _bullet.Radius = _config.Radius;

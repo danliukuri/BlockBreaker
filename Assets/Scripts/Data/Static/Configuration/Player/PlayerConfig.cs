@@ -12,5 +12,7 @@ namespace BlockBreaker.Data.Static.Configuration.Player
         
         [field: SerializeField, Range(MinPercentage, MaxPercentage)]
         public float SizeReserveProportion { get; private set; }
+
+        [field: SerializeField, Min(default)] public float ShootingForce { get; set; }
     }
 }
