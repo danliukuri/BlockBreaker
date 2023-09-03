@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0166ce0f59d7d8b44b06607774e03457, type: 3}
-  m_Name: PlayerConfig
+  m_Script: {fileID: 11500000, guid: 77411741410112f42bfde9c29b447b72, type: 3}
+  m_Name: BulletPoolConfig
   m_EditorClassIdentifier: 
-  <HealthPointsToScaleRatio>k__BackingField: 0.2
-  <Size>k__BackingField: 0.5
-  <SizeReserveProportion>k__BackingField: 0.2
+  <StartCount>k__BackingField: 2
+  <StartCapacity>k__BackingField: 5
+  <MaxSize>k__BackingField: 10
+  <ThrowErrorIfItemAlreadyInPoolWhenRelease>k__BackingField: 1

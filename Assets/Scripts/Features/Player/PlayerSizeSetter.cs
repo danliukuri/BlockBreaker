@@ -1,24 +1,27 @@
-﻿using UnityEngine;
+﻿using BlockBreaker.Data.Dynamic.Player;
+using UnityEngine;
 
 namespace BlockBreaker.Features.Player
 {
     public class PlayerSizeSetter
     {
-        private readonly Transform _player;
+        private readonly PlayerData _player;
 
-        public PlayerSizeSetter(Transform player) => _player = player;
+        public PlayerSizeSetter(PlayerData player) => _player = player;
 
         public void Set(float size)
         {
-            _player.localScale = Vector3.one * size;
-            CorrectPosition(size);
+            _player.Transform.localScale = Vector3.one * size;
+            _player.Size = size;
+            _player.Radius = size / 2f;
+            CorrectPosition();
         }
 
-        private void CorrectPosition(float size)
+        private void CorrectPosition()
         {
-            Vector3 playerPosition = _player.position;
-            float radius = size / 2f;
-            _player.position = new Vector3(playerPosition.x, playerPosition.y + radius, playerPosition.z);
+            Vector3 initialPosition = _player.InitialPosition;
+            _player.Transform.position =
+                new Vector3(initialPosition.x, initialPosition.y + _player.Radius, initialPosition.z);
         }
     }
 }

@@ -1,9 +1,9 @@
+using BlockBreaker.Data.Dynamic.Player;
 using BlockBreaker.Features.Obstacle;
 using BlockBreaker.Features.Player;
 using BlockBreaker.Features.Player.Carpet;
 using BlockBreaker.Infrastructure.Services;
 using BlockBreaker.Utilities.Patterns.State;
-using UnityEngine;
 using UnityEngine.Pool;
 
 namespace BlockBreaker.Architecture.GameStates.Gameplay
@@ -29,23 +29,21 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
         {
             PlayerDataProvider player = _playerPool.Get();
             PlayerCarpetDataProvider carpet = _playerCarpetPool.Get();
-            SetUpPlayer(player, carpet);
+            SetUpPlayer(player.Data, carpet);
 
             foreach (IActiveService service in _services)
                 service.Enable();
         }
 
-        private void SetUpPlayer(PlayerDataProvider player, PlayerCarpetDataProvider carpet)
+        private void SetUpPlayer(PlayerData player, PlayerCarpetDataProvider carpet)
         {
-            Transform playerTransform = player.transform;
+            player.SizeCalculator = new PLayerSizeCalculator(player, carpet);
+            player.SizeSetter = new PlayerSizeSetter(player);
+            player.CarpetSizeSetter = new PlayerCarpetSizeSetter(carpet.transform);
 
-            var playerSizeCalculator = new PLayerSizeCalculator(player.Config, carpet);
-            var playerSizeSetter = new PlayerSizeSetter(playerTransform);
-            var carpetSizeSetter = new PlayerCarpetSizeSetter(carpet.transform);
-
-            float newPlayerSize = playerSizeCalculator.CalculateSize(_blockObstacles);
-            playerSizeSetter.Set(newPlayerSize);
-            carpetSizeSetter.Set(newPlayerSize);
+            float newPlayerSize = player.SizeCalculator.CalculateSize(_blockObstacles);
+            player.SizeSetter.Set(newPlayerSize);
+            player.CarpetSizeSetter.Set(newPlayerSize);
         }
     }
 }

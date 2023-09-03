@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
 
-namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.SceneContext
+namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.SceneContext.Player
 {
     public class PlayerCarpetBindingsInstaller : MonoInstaller
     {
