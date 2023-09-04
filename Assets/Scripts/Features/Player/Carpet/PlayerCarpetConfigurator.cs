@@ -22,6 +22,7 @@ namespace BlockBreaker.Features.Player.Carpet
             data.Config = _config;
             data.Transform = component.transform;
             data.Transform.position = _spawnPoint.position;
+            data.ObstaclesDetector = new PlayerCarpetObstaclesDetector(data);
         }
     }
 }
