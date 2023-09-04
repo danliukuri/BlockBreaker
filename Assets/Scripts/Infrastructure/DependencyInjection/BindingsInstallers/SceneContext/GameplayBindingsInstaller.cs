@@ -24,7 +24,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<StateMachine>()
                 .AsSingle()
                 .WhenInjectedInto(typeof(SceneBootstrapper), typeof(SetupGameplayState), typeof(ProcessGameplayState),
-                    typeof(PlayerVictoryChecker));
+                    typeof(PlayerVictoryChecker), typeof(PlayerDefeatChecker));
         }
 
         private void BindStatesContainer()
