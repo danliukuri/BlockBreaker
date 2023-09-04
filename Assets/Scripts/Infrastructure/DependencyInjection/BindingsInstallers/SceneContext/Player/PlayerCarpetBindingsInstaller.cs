@@ -1,6 +1,7 @@
 using BlockBreaker.Data.Dynamic.Player;
 using BlockBreaker.Data.Static.Configuration;
 using BlockBreaker.Data.Static.Configuration.Player.Carpet;
+using BlockBreaker.Features.Player;
 using BlockBreaker.Features.Player.Carpet;
 using BlockBreaker.Infrastructure.Factories.Components;
 using UnityEngine;
@@ -74,8 +75,8 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         {
             Container
                 .BindInterfacesAndSelfTo<PlayerCarpetData>()
-                .AsTransient()
-                .WhenInjectedInto<PlayerCarpetDataProvider>();
+                .AsSingle()
+                .WhenInjectedInto(typeof(PlayerCarpetDataProvider), typeof(PlayerVictoryChecker));
         }
     }
 }

@@ -2,6 +2,7 @@
 using BlockBreaker.Data.Dynamic.Obstacle;
 using BlockBreaker.Data.Static.Configuration.Obstacle;
 using BlockBreaker.Features.Obstacle;
+using BlockBreaker.Features.Player;
 using BlockBreaker.Features.Player.Bullet;
 using UnityEngine;
 using Zenject;
@@ -46,7 +47,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .AsSingle()
                 .WithArguments(obstacles)
                 .WhenInjectedInto(typeof(SetupGameplayState), typeof(ProcessGameplayState),
-                    typeof(PlayerBulletExploder), typeof(ObstacleDestroyer));
+                    typeof(PlayerBulletExploder), typeof(ObstacleDestroyer), typeof(PlayerVictoryChecker));
         }
 
         private void BindData()

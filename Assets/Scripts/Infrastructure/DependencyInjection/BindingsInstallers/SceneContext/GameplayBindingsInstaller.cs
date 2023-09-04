@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using BlockBreaker.Architecture.Bootstrap;
 using BlockBreaker.Architecture.GameStates.Gameplay;
+using BlockBreaker.Features.Player;
 using BlockBreaker.Utilities.Patterns.State.Containers;
 using BlockBreaker.Utilities.Patterns.State.Machines;
 using Zenject;
@@ -22,7 +23,8 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             Container
                 .BindInterfacesTo<StateMachine>()
                 .AsSingle()
-                .WhenInjectedInto(typeof(SceneBootstrapper), typeof(SetupGameplayState), typeof(ProcessGameplayState));
+                .WhenInjectedInto(typeof(SceneBootstrapper), typeof(SetupGameplayState), typeof(ProcessGameplayState),
+                    typeof(PlayerVictoryChecker));
         }
 
         private void BindStatesContainer()

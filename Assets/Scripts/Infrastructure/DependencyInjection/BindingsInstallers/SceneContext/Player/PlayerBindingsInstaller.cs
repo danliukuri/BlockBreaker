@@ -27,6 +27,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindConfig();
             BindInputHandler();
             BindData();
+            BindVictoryChecker();
         }
 
         private void BindConfigurator()
@@ -88,6 +89,14 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .AsSingle()
                 .WhenInjectedInto(typeof(PlayerDataProvider), typeof(PlayerConfigurator),
                     typeof(PlayerBulletConfigurator), typeof(PlayerInputHandler));
+        }
+
+        private void BindVictoryChecker()
+        {
+            Container
+                .BindInterfacesTo<PlayerVictoryChecker>()
+                .AsSingle()
+                .WhenInjectedInto<ProcessGameplayState>();
         }
     }
 }

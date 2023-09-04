@@ -40,7 +40,7 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             SetUpObstacles();
             SetUpPlayer(player, carpet);
 
-            _gameplayStateMachine.ChangeStateTo<ProcessGameplayState, PlayerCarpetData>(carpet);
+            _gameplayStateMachine.ChangeStateTo<ProcessGameplayState>();
         }
 
         private void SetUpObstacles()
