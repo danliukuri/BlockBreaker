@@ -15,6 +15,7 @@ namespace BlockBreaker.Features.Obstacle
             Data = data;
             Data.Config = config;
             Data.Transform = transform;
+            Data.Destroyer = new ObstacleDestroyer();
         }
     }
 }
