@@ -11,18 +11,18 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
 {
     public class SetupGameplayState : IEnterableState
     {
-        private readonly ObstacleDataProvider[] _blockObstacles;
+        private readonly ObstaclesProvider _obstaclesProvider;
         private readonly IObjectPool<PlayerCarpetDataProvider> _playerCarpetPool;
         private readonly IObjectPool<PlayerDataProvider> _playerPool;
         private readonly IActiveService[] _services;
 
-        public SetupGameplayState(IObjectPool<PlayerCarpetDataProvider> playerCarpetPool,
-            IObjectPool<PlayerDataProvider> playerPool, ObstacleDataProvider[] blockObstacles,
+        public SetupGameplayState(ObstaclesProvider obstaclesProvider,
+            IObjectPool<PlayerCarpetDataProvider> playerCarpetPool, IObjectPool<PlayerDataProvider> playerPool,
             IActiveService[] services)
         {
+            _obstaclesProvider = obstaclesProvider;
             _playerCarpetPool = playerCarpetPool;
             _playerPool = playerPool;
-            _blockObstacles = blockObstacles;
             _services = services;
         }
 
@@ -30,6 +30,8 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
         {
             PlayerDataProvider player = _playerPool.Get();
             PlayerCarpetDataProvider carpet = _playerCarpetPool.Get();
+
+            _obstaclesProvider.InitializeObstacleData();
             SetUpPlayer(player.Data, carpet);
 
             foreach (IActiveService service in _services)
@@ -44,7 +46,7 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             player.CarpetSizeSetter = new PlayerCarpetSizeSetter(carpet.transform);
             player.Shooter = new PlayerBulletShooter(player);
 
-            float newPlayerSize = player.SizeCalculator.CalculateSize(_blockObstacles);
+            float newPlayerSize = player.SizeCalculator.CalculateSize(_obstaclesProvider.Obstacles);
             player.SizeSetter.Set(newPlayerSize);
             player.CarpetSizeSetter.Set(newPlayerSize);
         }

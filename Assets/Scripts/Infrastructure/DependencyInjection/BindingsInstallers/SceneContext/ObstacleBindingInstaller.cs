@@ -1,4 +1,5 @@
 ﻿using BlockBreaker.Architecture.GameStates.Gameplay;
+using BlockBreaker.Data.Dynamic.Obstacle;
 using BlockBreaker.Data.Static.Configuration.Obstacle;
 using BlockBreaker.Features.Obstacle;
 using UnityEngine;
@@ -14,7 +15,8 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         public override void InstallBindings()
         {
             BindConfig();
-            BindObstacles();
+            BindObstaclesProvider();
+            BindData();
         }
 
         private void BindConfig()
@@ -26,13 +28,21 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .WhenInjectedInto<ObstacleDataProvider>();
         }
 
-        private void BindObstacles()
+        private void BindObstaclesProvider()
         {
             Container
-                .BindInterfacesAndSelfTo<ObstacleDataProvider[]>()
-                .FromInstance(obstacles)
+                .BindInterfacesAndSelfTo<ObstaclesProvider>()
                 .AsSingle()
+                .WithArguments(obstacles)
                 .WhenInjectedInto<SetupGameplayState>();
+        }
+        
+        private void BindData()
+        {
+            Container
+                .BindInterfacesAndSelfTo<ObstacleData>()
+                .AsTransient()
+                .WhenInjectedInto<ObstacleDataProvider>();
         }
     }
 }
