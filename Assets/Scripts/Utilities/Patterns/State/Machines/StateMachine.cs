@@ -13,8 +13,8 @@ namespace BlockBreaker.Utilities.Patterns.State.Machines
         {
             (_currentState as IExitableState)?.Exit();
             var newState = _stateProvider.Get<TState>();
-            (newState as IEnterableState)?.Enter();
             _currentState = newState;
+            (newState as IEnterableState)?.Enter();
         }
 
         public void ChangeStateTo<TState, TEnterArgument>(TEnterArgument argument)
@@ -22,8 +22,8 @@ namespace BlockBreaker.Utilities.Patterns.State.Machines
         {
             (_currentState as IExitableState)?.Exit();
             var newState = _stateProvider.Get<TState>();
-            newState.Enter(argument);
             _currentState = newState;
+            newState.Enter(argument);
         }
     }
 }
