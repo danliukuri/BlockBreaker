@@ -1,4 +1,5 @@
 ﻿using BlockBreaker.Data.Static.Configuration.Player.Bullet;
+using BlockBreaker.Features.Player.Bullet;
 using UnityEngine;
 
 namespace BlockBreaker.Data.Dynamic.Player
@@ -11,5 +12,7 @@ namespace BlockBreaker.Data.Dynamic.Player
         public Vector3 InitialPosition { get; set; }
         public float Size { get; set; }
         public float Radius { get; set; }
+
+        public PlayerBulletDestroyer Destroyer { get; set; }
     }
 }

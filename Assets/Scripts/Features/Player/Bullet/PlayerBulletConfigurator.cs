@@ -7,30 +7,39 @@ namespace BlockBreaker.Features.Player.Bullet
 {
     public class PlayerBulletConfigurator : IComponentConfigurator<PlayerBulletDataProvider>
     {
-        private readonly PlayerBulletData _bullet;
+        private readonly PlayerBulletDestroyer _bulletDestroyer;
         private readonly PlayerBulletConfig _config;
         private readonly PlayerData _player;
 
-        public PlayerBulletConfigurator(PlayerBulletData bullet, PlayerBulletConfig config, PlayerData player)
+        public PlayerBulletConfigurator(PlayerBulletDestroyer bulletDestroyer,
+            PlayerBulletConfig config, PlayerData player)
         {
-            _bullet = bullet;
+            _bulletDestroyer = bulletDestroyer;
             _config = config;
             _player = player;
         }
 
         public void Configure(PlayerBulletDataProvider component)
         {
-            Transform transform = _bullet.Transform = component.transform;
-            _bullet.Rigidbody = component.GetComponent<Rigidbody>();
-            _bullet.Config = _config;
-            _bullet.Size = _config.Size;
-            _bullet.Radius = _config.Radius;
+            PlayerBulletData bullet = component.Data;
+            bullet.InitialPosition = ConfigureInitialPosition();
+            bullet.Transform = ConfigureTransform(component.transform, bullet);
+            bullet.Rigidbody = component.GetComponent<Rigidbody>();
+            bullet.Config = _config;
+            bullet.Size = _config.Size;
+            bullet.Radius = _config.Radius;
+            bullet.Destroyer = _bulletDestroyer;
+        }
 
+        private Vector3 ConfigureInitialPosition() =>
+            _config.SpawnDirection * (_player.Radius + _config.Radius) + _player.InitialPosition;
+
+        private Transform ConfigureTransform(Transform transform, PlayerBulletData bullet)
+        {
             transform.localScale = Vector3.one * _config.Size;
-
-            Vector3 initialPosition = _bullet.InitialPosition =
-                _config.SpawnDirection * (_player.Radius + _config.Radius) + _player.InitialPosition;
-            transform.position = new Vector3(initialPosition.x, initialPosition.y + _bullet.Radius, initialPosition.z);
+            Vector3 initialPosition = bullet.InitialPosition;
+            transform.position = new Vector3(initialPosition.x, initialPosition.y + bullet.Radius, initialPosition.z);
+            return transform;
         }
     }
 }
