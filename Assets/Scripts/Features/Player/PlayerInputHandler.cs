@@ -1,51 +1,34 @@
 ﻿using BlockBreaker.Data.Dynamic.Player;
-using BlockBreaker.Features.Player.Bullet;
 using BlockBreaker.Infrastructure.Services;
 using BlockBreaker.Infrastructure.Services.Input;
-using UnityEngine;
-using UnityEngine.Pool;
 
 namespace BlockBreaker.Features.Player
 {
     public class PlayerInputHandler : IActiveService
     {
-        private readonly IObjectPool<PlayerBulletDataProvider> _bullets;
         private readonly PlayerData _player;
         private readonly IPlayerTouchInputService _touchInputService;
-
-        private PlayerBulletDataProvider _currentBullet;
-
-        public PlayerInputHandler(IObjectPool<PlayerBulletDataProvider> bullets, PlayerData player,
-            IPlayerTouchInputService touchInputService)
+        
+        public PlayerInputHandler(PlayerData player, IPlayerTouchInputService touchInputService)
         {
-            _bullets = bullets;
             _player = player;
             _touchInputService = touchInputService;
         }
 
         public void Enable()
         {
-            _touchInputService.OnTouchBegan += InstantiateBullet;
-            _touchInputService.OnTouchEnded += ShootBullet;
-            _touchInputService.OnTouchHold += ConvertPlayerSizeToBullet;
+            _touchInputService.OnTouchBegan += _player.Shooter.InstantiateBullet;
+            _touchInputService.OnTouchEnded += _player.Shooter.ShootBullet;
+            _touchInputService.OnTouchHold += _player.Shooter.ChargeBullet;
         }
 
         public void Disable()
         {
-            _touchInputService.OnTouchBegan -= InstantiateBullet;
-            _touchInputService.OnTouchEnded -= ShootBullet;
-            _touchInputService.OnTouchHold -= ConvertPlayerSizeToBullet;
+            _touchInputService.OnTouchBegan -= _player.Shooter.InstantiateBullet;
+            _touchInputService.OnTouchEnded -= _player.Shooter.ShootBullet;
+            _touchInputService.OnTouchHold -= _player.Shooter.ChargeBullet;
         }
 
         ~PlayerInputHandler() => Disable();
-
-        private void InstantiateBullet() => _currentBullet = _bullets.Get(); // TODO: Move logic to player shooter 
-
-        private void ShootBullet() => // TODO: Add check on required bullet size
-            _player.Shooter.Shoot(_currentBullet.Data);
-
-        private void ConvertPlayerSizeToBullet() => // TODO: Add restriction about min player size
-            _player.SizeConverter.Convert(_currentBullet.Data,
-                _currentBullet.Data.Config.CreationSpeed * Time.deltaTime);
     }
 }
