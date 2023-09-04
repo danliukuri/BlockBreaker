@@ -8,11 +8,14 @@ namespace BlockBreaker.Features.Player
     {
         private readonly PlayerData _player;
         private readonly IPlayerTouchInputService _touchInputService;
-        
-        public PlayerInputHandler(PlayerData player, IPlayerTouchInputService touchInputService)
+        private readonly PlayerVictoryChecker _victoryChecker;
+
+        public PlayerInputHandler(PlayerData player, IPlayerTouchInputService touchInputService,
+            PlayerVictoryChecker victoryChecker)
         {
             _player = player;
             _touchInputService = touchInputService;
+            _victoryChecker = victoryChecker;
         }
 
         public void Enable()
@@ -20,6 +23,8 @@ namespace BlockBreaker.Features.Player
             _touchInputService.OnTouchBegan += _player.Shooter.InstantiateBullet;
             _touchInputService.OnTouchEnded += _player.Shooter.ShootBullet;
             _touchInputService.OnTouchHold += _player.Shooter.ChargeBullet;
+
+            _touchInputService.OnTouchEnded += _victoryChecker.CheckVictory;
         }
 
         public void Disable()
@@ -27,6 +32,8 @@ namespace BlockBreaker.Features.Player
             _touchInputService.OnTouchBegan -= _player.Shooter.InstantiateBullet;
             _touchInputService.OnTouchEnded -= _player.Shooter.ShootBullet;
             _touchInputService.OnTouchHold -= _player.Shooter.ChargeBullet;
+
+            _touchInputService.OnTouchEnded -= _victoryChecker.CheckVictory;
         }
 
         ~PlayerInputHandler() => Disable();

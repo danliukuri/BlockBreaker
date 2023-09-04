@@ -94,9 +94,9 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         private void BindVictoryChecker()
         {
             Container
-                .BindInterfacesTo<PlayerVictoryChecker>()
+                .BindInterfacesAndSelfTo<PlayerVictoryChecker>()
                 .AsSingle()
-                .WhenInjectedInto<ProcessGameplayState>();
+                .WhenInjectedInto(typeof(PlayerInputHandler), typeof(PlayerInputHandler));
         }
     }
 }
