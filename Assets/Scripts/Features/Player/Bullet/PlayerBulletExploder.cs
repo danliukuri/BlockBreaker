@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using BlockBreaker.Data.Dynamic.Obstacle;
 using BlockBreaker.Data.Dynamic.Player;
 using BlockBreaker.Features.Obstacle;
@@ -16,15 +16,17 @@ namespace BlockBreaker.Features.Player.Bullet
         public void Explode(PlayerBulletDataProvider bulletProvider)
         {
             PlayerBulletData bullet = bulletProvider.Data;
-            IEnumerable<ObstacleData> obstaclesInExplosionRange = GetObstaclesInExplosionRange(bullet);
+
+            ObstacleData[] obstaclesInExplosionRange = GetObstaclesInExplosionRange(bullet).ToArray();
             foreach (ObstacleData obstacle in obstaclesInExplosionRange)
-                obstacle.Destroyer.Destroy(obstacle.Transform.gameObject);
+                obstacle.Destroyer.Destroy(obstacle);
+
             bullet.Destroyer.Destroy(bulletProvider);
         }
 
         private IEnumerable<ObstacleData> GetObstaclesInExplosionRange(PlayerBulletData bullet)
         {
-            return Array.FindAll(_obstaclesProvider.Obstacles, IsInExplosionRange);
+            return _obstaclesProvider.Obstacles.Where(IsInExplosionRange);
 
             bool IsInExplosionRange(ObstacleData obstacle)
             {

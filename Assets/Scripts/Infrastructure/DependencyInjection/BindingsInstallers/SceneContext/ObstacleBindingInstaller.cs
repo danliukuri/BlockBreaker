@@ -2,6 +2,7 @@
 using BlockBreaker.Data.Dynamic.Obstacle;
 using BlockBreaker.Data.Static.Configuration.Obstacle;
 using BlockBreaker.Features.Obstacle;
+using BlockBreaker.Features.Player;
 using BlockBreaker.Features.Player.Bullet;
 using UnityEngine;
 using Zenject;
@@ -19,6 +20,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindConfigurator();
             BindObstaclesProvider();
             BindData();
+            BindObstacleDestroyer();
         }
 
         private void BindConfig()
@@ -44,7 +46,8 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<ObstaclesProvider>()
                 .AsSingle()
                 .WithArguments(obstacles)
-                .WhenInjectedInto(typeof(SetupGameplayState), typeof(PlayerBulletExploder));
+                .WhenInjectedInto(typeof(SetupGameplayState), typeof(ProcessGameplayState),
+                    typeof(PlayerBulletExploder), typeof(ObstacleDestroyer), typeof(PlayerVictoryChecker));
         }
 
         private void BindData()
@@ -53,6 +56,14 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<ObstacleData>()
                 .AsTransient()
                 .WhenInjectedInto<ObstacleDataProvider>();
+        }
+
+        private void BindObstacleDestroyer()
+        {
+            Container
+                .BindInterfacesAndSelfTo<ObstacleDestroyer>()
+                .AsSingle()
+                .WhenInjectedInto<ObstacleConfigurator>();
         }
     }
 }

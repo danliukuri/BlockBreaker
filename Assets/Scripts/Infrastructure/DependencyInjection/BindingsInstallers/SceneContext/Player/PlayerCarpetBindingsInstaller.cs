@@ -1,5 +1,7 @@
+using BlockBreaker.Data.Dynamic.Player;
 using BlockBreaker.Data.Static.Configuration;
 using BlockBreaker.Data.Static.Configuration.Player.Carpet;
+using BlockBreaker.Features.Player;
 using BlockBreaker.Features.Player.Carpet;
 using BlockBreaker.Infrastructure.Factories.Components;
 using UnityEngine;
@@ -22,6 +24,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindFactory();
             BindObjectPool();
             BindConfig();
+            BindData();
         }
 
         private void BindConfigurator()
@@ -65,7 +68,15 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<PlayerCarpetConfig>()
                 .FromScriptableObject(playerCarpetConfig)
                 .AsCached()
-                .WhenInjectedInto<PlayerCarpetDataProvider>();
+                .WhenInjectedInto<PlayerCarpetConfigurator>();
+        }
+
+        private void BindData()
+        {
+            Container
+                .BindInterfacesAndSelfTo<PlayerCarpetData>()
+                .AsSingle()
+                .WhenInjectedInto(typeof(PlayerCarpetDataProvider), typeof(PlayerVictoryChecker));
         }
     }
 }

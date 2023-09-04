@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using BlockBreaker.Data.Dynamic.Obstacle;
 
@@ -7,12 +8,12 @@ namespace BlockBreaker.Features.Obstacle
     public class ObstaclesProvider
     {
         public IEnumerable<ObstacleDataProvider> ObstacleDataProviders { get; }
-        public ObstacleData[] Obstacles { get; private set; }
+        public ObservableCollection<ObstacleData> Obstacles { get; private set; }
 
         public ObstaclesProvider(IEnumerable<ObstacleDataProvider> obstacleDataProviders) =>
             ObstacleDataProviders = obstacleDataProviders;
 
-        public ObstacleData[] InitializeObstacleData() =>
-            Obstacles = ObstacleDataProviders.Select(obstacle => obstacle.Data).ToArray();
+        public ObservableCollection<ObstacleData> InitializeObstacleData() =>
+            Obstacles = new ObservableCollection<ObstacleData>(ObstacleDataProviders.Select(obstacle => obstacle.Data));
     }
 }
