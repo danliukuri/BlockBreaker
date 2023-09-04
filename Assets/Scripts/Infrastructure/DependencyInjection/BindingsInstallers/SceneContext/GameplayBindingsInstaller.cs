@@ -22,7 +22,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             Container
                 .BindInterfacesTo<StateMachine>()
                 .AsSingle()
-                .WhenInjectedInto(typeof(SceneBootstrapper), typeof(SetupGameplayState));
+                .WhenInjectedInto(typeof(SceneBootstrapper), typeof(SetupGameplayState), typeof(ProcessGameplayState));
         }
 
         private void BindStatesContainer()

@@ -78,7 +78,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             Container
                 .BindInterfacesTo<PlayerInputHandler>()
                 .AsSingle()
-                .WhenInjectedInto<SetupGameplayState>();
+                .WhenInjectedInto<ProcessGameplayState>();
         }
 
         private void BindData()
