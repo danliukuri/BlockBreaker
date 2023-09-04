@@ -33,11 +33,11 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
 
         public void Enter()
         {
-            PlayerDataProvider player = _playerPool.Get();
-            PlayerCarpetDataProvider carpet = _playerCarpetPool.Get();
+            PlayerData player = _playerPool.Get().Data;
+            PlayerCarpetData carpet = _playerCarpetPool.Get().Data;
 
             SetUpObstacles();
-            SetUpPlayer(player.Data, carpet);
+            SetUpPlayer(player, carpet);
 
             foreach (IActiveService service in _services)
                 service.Enable();
@@ -50,12 +50,12 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             _obstaclesProvider.InitializeObstacleData();
         }
 
-        private void SetUpPlayer(PlayerData player, PlayerCarpetDataProvider carpet)
+        private void SetUpPlayer(PlayerData player, PlayerCarpetData carpet)
         {
             player.SizeConverter = new PlayerSizeConverter(player);
             player.SizeCalculator = new PLayerSizeCalculator(player, carpet);
             player.SizeSetter = new PlayerSizeSetter(player);
-            player.CarpetSizeSetter = new PlayerCarpetSizeSetter(carpet.transform);
+            player.CarpetSizeSetter = new PlayerCarpetSizeSetter(carpet.Transform);
             player.Shooter = new PlayerBulletShooter(_bulletsPool, player);
 
             float newPlayerSize = player.SizeCalculator.CalculateSize(_obstaclesProvider.Obstacles);

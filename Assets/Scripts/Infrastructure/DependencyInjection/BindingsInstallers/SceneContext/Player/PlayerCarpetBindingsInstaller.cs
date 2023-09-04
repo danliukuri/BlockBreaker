@@ -1,3 +1,4 @@
+using BlockBreaker.Data.Dynamic.Player;
 using BlockBreaker.Data.Static.Configuration;
 using BlockBreaker.Data.Static.Configuration.Player.Carpet;
 using BlockBreaker.Features.Player.Carpet;
@@ -22,6 +23,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindFactory();
             BindObjectPool();
             BindConfig();
+            BindData();
         }
 
         private void BindConfigurator()
@@ -65,6 +67,14 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<PlayerCarpetConfig>()
                 .FromScriptableObject(playerCarpetConfig)
                 .AsCached()
+                .WhenInjectedInto<PlayerCarpetConfigurator>();
+        }
+
+        private void BindData()
+        {
+            Container
+                .BindInterfacesAndSelfTo<PlayerCarpetData>()
+                .AsTransient()
                 .WhenInjectedInto<PlayerCarpetDataProvider>();
         }
     }

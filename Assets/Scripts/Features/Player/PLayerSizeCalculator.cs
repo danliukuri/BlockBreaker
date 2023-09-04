@@ -1,29 +1,27 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using BlockBreaker.Data.Dynamic.Obstacle;
 using BlockBreaker.Data.Dynamic.Player;
-using BlockBreaker.Features.Player.Carpet;
 using UnityEngine;
 
 namespace BlockBreaker.Features.Player
 {
     public class PLayerSizeCalculator
     {
-        private readonly PlayerCarpetDataProvider _playerCarpet;
         private readonly PlayerData _player;
+        private readonly PlayerCarpetData _playerCarpet;
 
-        public PLayerSizeCalculator(PlayerData player, PlayerCarpetDataProvider playerCarpet)
+        public PLayerSizeCalculator(PlayerData player, PlayerCarpetData playerCarpet)
         {
-            _player = player;
             _playerCarpet = playerCarpet;
+            _player = player;
         }
 
         public float CalculateSize(ICollection<ObstacleData> obstacles)
         {
             float lastPlayerSize;
             float currentPlayerSize = _player.Size;
-            
+
             do
             {
                 lastPlayerSize = currentPlayerSize;
@@ -48,7 +46,7 @@ namespace BlockBreaker.Features.Player
         private IEnumerable<ObstacleData> CalculateObstaclesOnWay(IEnumerable<ObstacleData> obstacles,
             float carpetRadiusX)
         {
-            Vector3 carpetPosition = _playerCarpet.transform.position;
+            Vector3 carpetPosition = _playerCarpet.Transform.position;
             float carpetRadiusZ = _playerCarpet.Config.Radius.z;
 
             return obstacles.Where(obstacle => IsOnCarpet(obstacle.Transform.position, obstacle.Config.Radius));
