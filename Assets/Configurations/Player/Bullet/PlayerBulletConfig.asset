@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CreationSpeed>k__BackingField: 0.25
   <SpawnDirection>k__BackingField: {x: 0, y: 0, z: 1}
-  <Size>k__BackingField: 0.5
+  <Size>k__BackingField: 0
+  <ExplosionPower>k__BackingField: 2

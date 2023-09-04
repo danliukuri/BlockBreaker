@@ -15,3 +15,4 @@ MonoBehaviour:
   <HealthPointsToScaleRatio>k__BackingField: 0.2
   <Size>k__BackingField: 0.5
   <SizeReserveProportion>k__BackingField: 0.2
+  <ShootingForce>k__BackingField: 10

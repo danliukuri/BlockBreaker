@@ -1,6 +1,8 @@
 ﻿using BlockBreaker.Architecture.GameStates.Gameplay;
+using BlockBreaker.Data.Dynamic.Obstacle;
 using BlockBreaker.Data.Static.Configuration.Obstacle;
 using BlockBreaker.Features.Obstacle;
+using BlockBreaker.Features.Player.Bullet;
 using UnityEngine;
 using Zenject;
 
@@ -14,7 +16,9 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         public override void InstallBindings()
         {
             BindConfig();
-            BindObstacles();
+            BindConfigurator();
+            BindObstaclesProvider();
+            BindData();
         }
 
         private void BindConfig()
@@ -23,16 +27,32 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<ObstacleConfig>()
                 .FromScriptableObject(obstacleConfig)
                 .AsCached()
-                .WhenInjectedInto<ObstacleDataProvider>();
+                .WhenInjectedInto<ObstacleConfigurator>();
         }
 
-        private void BindObstacles()
+        private void BindConfigurator()
         {
             Container
-                .BindInterfacesAndSelfTo<ObstacleDataProvider[]>()
-                .FromInstance(obstacles)
+                .BindInterfacesTo<ObstacleConfigurator>()
                 .AsSingle()
                 .WhenInjectedInto<SetupGameplayState>();
+        }
+
+        private void BindObstaclesProvider()
+        {
+            Container
+                .BindInterfacesAndSelfTo<ObstaclesProvider>()
+                .AsSingle()
+                .WithArguments(obstacles)
+                .WhenInjectedInto(typeof(SetupGameplayState), typeof(PlayerBulletExploder));
+        }
+
+        private void BindData()
+        {
+            Container
+                .BindInterfacesAndSelfTo<ObstacleData>()
+                .AsTransient()
+                .WhenInjectedInto<ObstacleDataProvider>();
         }
     }
 }

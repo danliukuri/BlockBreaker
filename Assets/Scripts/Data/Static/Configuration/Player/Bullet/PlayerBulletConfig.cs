@@ -9,5 +9,6 @@ namespace BlockBreaker.Data.Static.Configuration.Player.Bullet
         [field: SerializeField, Min(default)] public Vector3 SpawnDirection { get; private set; }
         [field: SerializeField, Min(default)] public float Size { get; private set; }
         public float Radius => Size / 2f;
+        [field: SerializeField, Min(default)]  public float ExplosionPower { get; private set; }
     }
 }

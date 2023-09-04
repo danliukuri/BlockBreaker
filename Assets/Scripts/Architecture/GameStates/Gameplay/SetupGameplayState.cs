@@ -11,18 +11,23 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
 {
     public class SetupGameplayState : IEnterableState
     {
-        private readonly ObstacleDataProvider[] _blockObstacles;
+        private readonly IObjectPool<PlayerBulletDataProvider> _bulletsPool;
+        private readonly IComponentConfigurator<ObstacleDataProvider> _obstacleConfigurator;
+        private readonly ObstaclesProvider _obstaclesProvider;
         private readonly IObjectPool<PlayerCarpetDataProvider> _playerCarpetPool;
         private readonly IObjectPool<PlayerDataProvider> _playerPool;
         private readonly IActiveService[] _services;
 
-        public SetupGameplayState(IObjectPool<PlayerCarpetDataProvider> playerCarpetPool,
-            IObjectPool<PlayerDataProvider> playerPool, ObstacleDataProvider[] blockObstacles,
+        public SetupGameplayState(IObjectPool<PlayerBulletDataProvider> bulletsPool,
+            IComponentConfigurator<ObstacleDataProvider> obstacleConfigurator, ObstaclesProvider obstaclesProvider,
+            IObjectPool<PlayerCarpetDataProvider> playerCarpetPool, IObjectPool<PlayerDataProvider> playerPool,
             IActiveService[] services)
         {
+            _bulletsPool = bulletsPool;
+            _obstacleConfigurator = obstacleConfigurator;
+            _obstaclesProvider = obstaclesProvider;
             _playerCarpetPool = playerCarpetPool;
             _playerPool = playerPool;
-            _blockObstacles = blockObstacles;
             _services = services;
         }
 
@@ -30,10 +35,19 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
         {
             PlayerDataProvider player = _playerPool.Get();
             PlayerCarpetDataProvider carpet = _playerCarpetPool.Get();
+
+            SetUpObstacles();
             SetUpPlayer(player.Data, carpet);
 
             foreach (IActiveService service in _services)
                 service.Enable();
+        }
+
+        private void SetUpObstacles()
+        {
+            foreach (ObstacleDataProvider obstacle in _obstaclesProvider.ObstacleDataProviders)
+                _obstacleConfigurator.Configure(obstacle);
+            _obstaclesProvider.InitializeObstacleData();
         }
 
         private void SetUpPlayer(PlayerData player, PlayerCarpetDataProvider carpet)
@@ -42,9 +56,9 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             player.SizeCalculator = new PLayerSizeCalculator(player, carpet);
             player.SizeSetter = new PlayerSizeSetter(player);
             player.CarpetSizeSetter = new PlayerCarpetSizeSetter(carpet.transform);
-            player.Shooter = new PlayerBulletShooter(player);
+            player.Shooter = new PlayerBulletShooter(_bulletsPool, player);
 
-            float newPlayerSize = player.SizeCalculator.CalculateSize(_blockObstacles);
+            float newPlayerSize = player.SizeCalculator.CalculateSize(_obstaclesProvider.Obstacles);
             player.SizeSetter.Set(newPlayerSize);
             player.CarpetSizeSetter.Set(newPlayerSize);
         }
