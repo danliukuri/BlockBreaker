@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using BlockBreaker.Data.Dynamic.Obstacle;
 using BlockBreaker.Data.Dynamic.Player;
@@ -18,7 +19,7 @@ namespace BlockBreaker.Features.Player
             _playerCarpet = playerCarpet;
         }
 
-        public float CalculateSize(ObstacleData[] obstacles)
+        public float CalculateSize(ICollection<ObstacleData> obstacles)
         {
             float lastPlayerSize;
             float currentPlayerSize = _player.Size;
