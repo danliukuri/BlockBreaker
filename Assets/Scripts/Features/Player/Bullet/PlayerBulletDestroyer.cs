@@ -8,8 +8,8 @@ namespace BlockBreaker.Features.Player.Bullet
 
         public void Destroy(PlayerBulletDataProvider bullet)
         {
-            BulletsPool?.Release(bullet);
             bullet.Data.IsDestroyed = true;
+            BulletsPool?.Release(bullet);
         }
     }
 }

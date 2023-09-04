@@ -18,6 +18,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         public override void InstallBindings()
         {
             BindConfigurator();
+            BindResetter();
             BindFactory();
             BindObjectPool();
             BindConfig();
@@ -29,9 +30,17 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         private void BindConfigurator()
         {
             Container
-                .BindInterfacesAndSelfTo<PlayerBulletConfigurator>()
+                .BindInterfacesTo<PlayerBulletConfigurator>()
                 .AsSingle()
-                .WhenInjectedInto<ComponentFactory<PlayerBulletDataProvider>>();
+                .WhenInjectedInto<IComponentFactory<PlayerBulletDataProvider>>();
+        }
+
+        private void BindResetter()
+        {
+            Container
+                .BindInterfacesTo<PlayerBulletResetter>()
+                .AsSingle()
+                .WhenInjectedInto<IComponentFactory<PlayerBulletDataProvider>>();
         }
 
         private void BindFactory()
@@ -40,7 +49,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesTo<FactoryConfig>()
                 .FromScriptableObject(factoryConfig)
                 .AsCached()
-                .WhenInjectedInto<DependentComponentFactory<PlayerBulletDataProvider>>();
+                .WhenInjectedInto<IComponentFactory<PlayerBulletDataProvider>>();
             
             Container.BindInterfacesTo<DependentComponentFactory<PlayerBulletDataProvider>>().AsSingle();
         }
