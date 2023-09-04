@@ -5,6 +5,7 @@ using BlockBreaker.Features.Player.Bullet;
 using BlockBreaker.Features.Player.Carpet;
 using BlockBreaker.Infrastructure.Services;
 using BlockBreaker.Utilities.Patterns.State;
+using BlockBreaker.Utilities.Patterns.State.Machines;
 using UnityEngine.Pool;
 
 namespace BlockBreaker.Architecture.GameStates.Gameplay
@@ -16,19 +17,19 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
         private readonly ObstaclesProvider _obstaclesProvider;
         private readonly IObjectPool<PlayerCarpetDataProvider> _playerCarpetPool;
         private readonly IObjectPool<PlayerDataProvider> _playerPool;
-        private readonly IActiveService[] _services;
+        private readonly IStateMachine _gameplayStateMachine;
 
         public SetupGameplayState(IObjectPool<PlayerBulletDataProvider> bulletsPool,
             IComponentConfigurator<ObstacleDataProvider> obstacleConfigurator, ObstaclesProvider obstaclesProvider,
             IObjectPool<PlayerCarpetDataProvider> playerCarpetPool, IObjectPool<PlayerDataProvider> playerPool,
-            IActiveService[] services)
+            IStateMachine gameplayStateMachine)
         {
             _bulletsPool = bulletsPool;
             _obstacleConfigurator = obstacleConfigurator;
             _obstaclesProvider = obstaclesProvider;
             _playerCarpetPool = playerCarpetPool;
             _playerPool = playerPool;
-            _services = services;
+            _gameplayStateMachine = gameplayStateMachine;
         }
 
         public void Enter()
@@ -39,8 +40,7 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             SetUpObstacles();
             SetUpPlayer(player, carpet);
 
-            foreach (IActiveService service in _services)
-                service.Enable();
+            _gameplayStateMachine.ChangeStateTo<ProcessGameplayState>();
         }
 
         private void SetUpObstacles()

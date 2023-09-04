@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using BlockBreaker.Architecture.Bootstrap;
 using BlockBreaker.Architecture.GameStates.Gameplay;
 using BlockBreaker.Utilities.Patterns.State.Containers;
 using BlockBreaker.Utilities.Patterns.State.Machines;
@@ -16,7 +17,13 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindStates();
         }
 
-        private void BindStateMachine() => Container.BindInterfacesTo<StateMachine>().AsSingle();
+        private void BindStateMachine()
+        {
+            Container
+                .BindInterfacesTo<StateMachine>()
+                .AsSingle()
+                .WhenInjectedInto(typeof(SceneBootstrapper), typeof(SetupGameplayState));
+        }
 
         private void BindStatesContainer()
         {
@@ -30,7 +37,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
 
         private void BindStates()
         {
-            var gameStatesTypes = new List<Type> { typeof(SetupGameplayState) };
+            var gameStatesTypes = new List<Type> { typeof(SetupGameplayState), typeof(ProcessGameplayState) };
             gameStatesTypes.ForEach(BindState());
 
             Action<Type> BindState() => stateType =>
