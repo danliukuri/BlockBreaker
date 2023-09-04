@@ -37,7 +37,8 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
 
         private void BindStates()
         {
-            var gameStatesTypes = new List<Type> { typeof(SetupGameplayState), typeof(ProcessGameplayState) };
+            var gameStatesTypes = new List<Type> { typeof(SetupGameplayState), typeof(ProcessGameplayState),
+                typeof(VictoryGameplayState), typeof(DefeatGameplayState) };
             gameStatesTypes.ForEach(BindState());
 
             Action<Type> BindState() => stateType =>
