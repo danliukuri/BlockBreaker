@@ -10,12 +10,14 @@ namespace BlockBreaker.Infrastructure.Factories.Components
         protected readonly IFactoryConfig _config;
         private readonly IComponentConfigurator<TComponent> _configurator;
         protected readonly Transform _objectParent;
+        private readonly IComponentResetter<TComponent> _resetter;
 
-        public ComponentFactory(IFactoryConfig config, IComponentConfigurator<TComponent> configurator,
-            Transform objectParent = default)
+        public ComponentFactory(IFactoryConfig config, IComponentConfigurator<TComponent> configurator = default,
+            Transform objectParent = default, IComponentResetter<TComponent> resetter = default)
         {
             _config = config;
             _configurator = configurator;
+            _resetter = resetter;
             _objectParent = objectParent;
         }
 
@@ -24,11 +26,15 @@ namespace BlockBreaker.Infrastructure.Factories.Components
 
         public void ConfigureGameObject(TComponent component)
         {
-            _configurator.Configure(component);
+            _configurator?.Configure(component);
             component.gameObject.SetActive(true);
         }
 
-        public void DeactivateGameObject(TComponent component) => component.gameObject.SetActive(false);
+        public void ResetGameObject(TComponent component)
+        {
+            _resetter?.Reset(component);
+            component.gameObject.SetActive(false);
+        }
 
         public void DestroyGameObject(TComponent component) => Object.Destroy(component.gameObject);
     }

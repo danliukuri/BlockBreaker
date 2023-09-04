@@ -10,9 +10,11 @@ namespace BlockBreaker.Infrastructure.Factories.Components
     {
         private readonly IInstantiator _instantiator;
 
-        public DependentComponentFactory(IFactoryConfig config, IComponentConfigurator<TComponent> configurator, 
-            IInstantiator instantiator, Transform objectParent = default) :
-            base(config, configurator, objectParent) => _instantiator = instantiator;
+        public DependentComponentFactory(IFactoryConfig config, IInstantiator instantiator,
+            IComponentConfigurator<TComponent> configurator = default,
+            IComponentResetter<TComponent> resetter = default,
+            Transform objectParent = default) : base(config, configurator, objectParent, resetter) =>
+            _instantiator = instantiator;
 
         public override TComponent Create() =>
             _config.Prefab.AsInactive(_instantiator.InstantiatePrefabForComponent<TComponent>, _objectParent);
