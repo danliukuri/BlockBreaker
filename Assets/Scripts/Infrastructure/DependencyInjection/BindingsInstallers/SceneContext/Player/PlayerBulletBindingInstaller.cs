@@ -23,6 +23,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindConfig();
             BindData();
             BindDestroyer();
+            BindExploder();
         }
 
         private void BindConfigurator()
@@ -80,6 +81,14 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         {
             Container
                 .BindInterfacesAndSelfTo<PlayerBulletDestroyer>()
+                .AsSingle()
+                .WhenInjectedInto<PlayerBulletConfigurator>();
+        }
+
+        private void BindExploder()
+        {
+            Container
+                .BindInterfacesAndSelfTo<PlayerBulletExploder>()
                 .AsSingle()
                 .WhenInjectedInto<PlayerBulletConfigurator>();
         }

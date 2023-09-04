@@ -8,13 +8,15 @@ namespace BlockBreaker.Features.Player.Bullet
     public class PlayerBulletConfigurator : IComponentConfigurator<PlayerBulletDataProvider>
     {
         private readonly PlayerBulletDestroyer _bulletDestroyer;
+        private readonly PlayerBulletExploder _bulletExploder;
         private readonly PlayerBulletConfig _config;
         private readonly PlayerData _player;
 
-        public PlayerBulletConfigurator(PlayerBulletDestroyer bulletDestroyer,
+        public PlayerBulletConfigurator(PlayerBulletDestroyer bulletDestroyer, PlayerBulletExploder bulletExploder,
             PlayerBulletConfig config, PlayerData player)
         {
             _bulletDestroyer = bulletDestroyer;
+            _bulletExploder = bulletExploder;
             _config = config;
             _player = player;
         }
@@ -29,6 +31,7 @@ namespace BlockBreaker.Features.Player.Bullet
             bullet.Size = _config.Size;
             bullet.Radius = _config.Radius;
             bullet.Destroyer = _bulletDestroyer;
+            bullet.Exploder = _bulletExploder;
         }
 
         private Vector3 ConfigureInitialPosition() =>

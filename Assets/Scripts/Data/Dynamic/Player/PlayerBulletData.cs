@@ -14,5 +14,6 @@ namespace BlockBreaker.Data.Dynamic.Player
         public float Radius { get; set; }
 
         public PlayerBulletDestroyer Destroyer { get; set; }
+        public PlayerBulletExploder Exploder { get; set; }
     }
 }
