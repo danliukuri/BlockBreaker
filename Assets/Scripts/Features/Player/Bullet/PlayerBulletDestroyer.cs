@@ -6,6 +6,10 @@ namespace BlockBreaker.Features.Player.Bullet
     {
         public IObjectPool<PlayerBulletDataProvider> BulletsPool { get; set; }
 
-        public void Destroy(PlayerBulletDataProvider bullet) => BulletsPool?.Release(bullet);
+        public void Destroy(PlayerBulletDataProvider bullet)
+        {
+            BulletsPool?.Release(bullet);
+            bullet.Data.IsDestroyed = true;
+        }
     }
 }

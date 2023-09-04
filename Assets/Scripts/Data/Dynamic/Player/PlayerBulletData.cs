@@ -15,5 +15,7 @@ namespace BlockBreaker.Data.Dynamic.Player
 
         public PlayerBulletDestroyer Destroyer { get; set; }
         public PlayerBulletExploder Exploder { get; set; }
+
+        public bool IsDestroyed { get; set; }
     }
 }

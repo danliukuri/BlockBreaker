@@ -32,6 +32,7 @@ namespace BlockBreaker.Features.Player.Bullet
             bullet.Radius = _config.Radius;
             bullet.Destroyer = _bulletDestroyer;
             bullet.Exploder = _bulletExploder;
+            bullet.IsDestroyed = false;
         }
 
         private Vector3 ConfigureInitialPosition() =>
