@@ -11,15 +11,17 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
 {
     public class SetupGameplayState : IEnterableState
     {
+        private readonly IComponentConfigurator<ObstacleDataProvider> _obstacleConfigurator;
         private readonly ObstaclesProvider _obstaclesProvider;
         private readonly IObjectPool<PlayerCarpetDataProvider> _playerCarpetPool;
         private readonly IObjectPool<PlayerDataProvider> _playerPool;
         private readonly IActiveService[] _services;
 
-        public SetupGameplayState(ObstaclesProvider obstaclesProvider,
-            IObjectPool<PlayerCarpetDataProvider> playerCarpetPool, IObjectPool<PlayerDataProvider> playerPool,
-            IActiveService[] services)
+        public SetupGameplayState(IComponentConfigurator<ObstacleDataProvider> obstacleConfigurator,
+            ObstaclesProvider obstaclesProvider, IObjectPool<PlayerCarpetDataProvider> playerCarpetPool,
+            IObjectPool<PlayerDataProvider> playerPool, IActiveService[] services)
         {
+            _obstacleConfigurator = obstacleConfigurator;
             _obstaclesProvider = obstaclesProvider;
             _playerCarpetPool = playerCarpetPool;
             _playerPool = playerPool;
@@ -31,11 +33,18 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             PlayerDataProvider player = _playerPool.Get();
             PlayerCarpetDataProvider carpet = _playerCarpetPool.Get();
 
-            _obstaclesProvider.InitializeObstacleData();
+            SetUpObstacles();
             SetUpPlayer(player.Data, carpet);
 
             foreach (IActiveService service in _services)
                 service.Enable();
+        }
+
+        private void SetUpObstacles()
+        {
+            foreach (ObstacleDataProvider obstacle in _obstaclesProvider.ObstacleDataProviders)
+                _obstacleConfigurator.Configure(obstacle);
+            _obstaclesProvider.InitializeObstacleData();
         }
 
         private void SetUpPlayer(PlayerData player, PlayerCarpetDataProvider carpet)

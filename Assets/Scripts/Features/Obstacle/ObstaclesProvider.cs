@@ -6,13 +6,13 @@ namespace BlockBreaker.Features.Obstacle
 {
     public class ObstaclesProvider
     {
-        private readonly IEnumerable<ObstacleDataProvider> _obstacleDataProviders;
+        public IEnumerable<ObstacleDataProvider> ObstacleDataProviders { get; }
         public ObstacleData[] Obstacles { get; private set; }
 
         public ObstaclesProvider(IEnumerable<ObstacleDataProvider> obstacleDataProviders) =>
-            _obstacleDataProviders = obstacleDataProviders;
+            ObstacleDataProviders = obstacleDataProviders;
 
         public ObstacleData[] InitializeObstacleData() =>
-            Obstacles = _obstacleDataProviders.Select(obstacle => obstacle.Data).ToArray();
+            Obstacles = ObstacleDataProviders.Select(obstacle => obstacle.Data).ToArray();
     }
 }

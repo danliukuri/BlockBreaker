@@ -15,6 +15,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         public override void InstallBindings()
         {
             BindConfig();
+            BindConfigurator();
             BindObstaclesProvider();
             BindData();
         }
@@ -25,7 +26,15 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<ObstacleConfig>()
                 .FromScriptableObject(obstacleConfig)
                 .AsCached()
-                .WhenInjectedInto<ObstacleDataProvider>();
+                .WhenInjectedInto<ObstacleConfigurator>();
+        }
+
+        private void BindConfigurator()
+        {
+            Container
+                .BindInterfacesTo<ObstacleConfigurator>()
+                .AsSingle()
+                .WhenInjectedInto<SetupGameplayState>();
         }
 
         private void BindObstaclesProvider()
@@ -36,7 +45,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .WithArguments(obstacles)
                 .WhenInjectedInto<SetupGameplayState>();
         }
-        
+
         private void BindData()
         {
             Container
