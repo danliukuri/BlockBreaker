@@ -6,13 +6,15 @@ namespace BlockBreaker.Features.Player
 {
     public class PlayerInputHandler : IActiveService
     {
+        private readonly PlayerDefeatChecker _defeatChecker;
         private readonly PlayerData _player;
         private readonly IPlayerTouchInputService _touchInputService;
         private readonly PlayerVictoryChecker _victoryChecker;
 
-        public PlayerInputHandler(PlayerData player, IPlayerTouchInputService touchInputService,
-            PlayerVictoryChecker victoryChecker)
+        public PlayerInputHandler(PlayerDefeatChecker defeatChecker, PlayerData player,
+            IPlayerTouchInputService touchInputService, PlayerVictoryChecker victoryChecker)
         {
+            _defeatChecker = defeatChecker;
             _player = player;
             _touchInputService = touchInputService;
             _victoryChecker = victoryChecker;
@@ -25,6 +27,7 @@ namespace BlockBreaker.Features.Player
             _touchInputService.OnTouchHold += _player.Shooter.ChargeBullet;
 
             _touchInputService.OnTouchEnded += _victoryChecker.CheckVictory;
+            _touchInputService.OnTouchHold += _defeatChecker.CheckDefeat;
         }
 
         public void Disable()
@@ -34,6 +37,7 @@ namespace BlockBreaker.Features.Player
             _touchInputService.OnTouchHold -= _player.Shooter.ChargeBullet;
 
             _touchInputService.OnTouchEnded -= _victoryChecker.CheckVictory;
+            _touchInputService.OnTouchHold -= _defeatChecker.CheckDefeat;
         }
 
         ~PlayerInputHandler() => Disable();
