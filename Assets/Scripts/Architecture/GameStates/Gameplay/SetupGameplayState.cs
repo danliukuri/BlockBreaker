@@ -40,7 +40,7 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             SetUpObstacles();
             SetUpPlayer(player, carpet);
 
-            _gameplayStateMachine.ChangeStateTo<ProcessGameplayState>();
+            _gameplayStateMachine.ChangeStateTo<ProcessGameplayState, PlayerCarpetData>(carpet);
         }
 
         private void SetUpObstacles()
@@ -55,7 +55,7 @@ namespace BlockBreaker.Architecture.GameStates.Gameplay
             player.SizeConverter = new PlayerSizeConverter(player);
             player.SizeCalculator = new PLayerSizeCalculator(carpet.ObstaclesDetector, player);
             player.SizeSetter = new PlayerSizeSetter(player);
-            player.CarpetSizeSetter = new PlayerCarpetSizeSetter(carpet.Transform);
+            player.CarpetSizeSetter = new PlayerCarpetSizeSetter(carpet);
             player.Shooter = new PlayerBulletShooter(_bulletsPool, player);
 
             float newPlayerSize = player.SizeCalculator.CalculateSize(_obstaclesProvider.Obstacles);

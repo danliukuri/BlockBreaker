@@ -8,6 +8,7 @@ namespace BlockBreaker.Data.Dynamic.Player
     {
         public PlayerCarpetConfig Config { get; set; }
         public Transform Transform { get; set; }
+        public Vector3 Radius { get; set; }
 
         public PlayerCarpetObstaclesDetector ObstaclesDetector { get; set; }
     }

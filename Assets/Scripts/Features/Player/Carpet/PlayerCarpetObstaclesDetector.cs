@@ -36,6 +36,6 @@ namespace BlockBreaker.Features.Player.Carpet
             carpetPosition.IsInHorizontalBounds(carpetRadius, objectPosition, objectRadius);
 
         public bool IsOnCarpet(Vector3 objectPosition, Vector3 objectRadius) =>
-            IsOnCarpet(objectPosition, objectRadius, _playerCarpet.Transform.position, _playerCarpet.Config.Radius);
+            IsOnCarpet(objectPosition, objectRadius, _playerCarpet.Transform.position, _playerCarpet.Radius);
     }
 }
