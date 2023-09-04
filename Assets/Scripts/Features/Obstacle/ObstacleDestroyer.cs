@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using BlockBreaker.Data.Dynamic.Obstacle;
 
 namespace BlockBreaker.Features.Obstacle
 {
     public class ObstacleDestroyer
     {
-        public void Destroy(GameObject gameObject) => gameObject.SetActive(false);
+        private readonly ObstaclesProvider _obstaclesProvider;
+
+        public ObstacleDestroyer(ObstaclesProvider obstaclesProvider) => _obstaclesProvider = obstaclesProvider;
+
+        public void Destroy(ObstacleData obstacle)
+        {
+            _obstaclesProvider.Obstacles.Remove(obstacle);
+            obstacle.Transform.gameObject.SetActive(false);
+        }
     }
 }

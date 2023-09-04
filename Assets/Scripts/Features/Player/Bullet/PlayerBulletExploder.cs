@@ -17,9 +17,9 @@ namespace BlockBreaker.Features.Player.Bullet
         {
             PlayerBulletData bullet = bulletProvider.Data;
 
-            IEnumerable<ObstacleData> obstaclesInExplosionRange = GetObstaclesInExplosionRange(bullet);
+            ObstacleData[] obstaclesInExplosionRange = GetObstaclesInExplosionRange(bullet).ToArray();
             foreach (ObstacleData obstacle in obstaclesInExplosionRange)
-                obstacle.Destroyer.Destroy(obstacle.Transform.gameObject);
+                obstacle.Destroyer.Destroy(obstacle);
 
             bullet.Destroyer.Destroy(bulletProvider);
         }

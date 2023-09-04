@@ -39,11 +39,13 @@ namespace BlockBreaker.Features.Player
 
         ~PlayerInputHandler() => Disable();
 
-        private void InstantiateBullet() => _currentBullet = _bullets.Get();
+        private void InstantiateBullet() => _currentBullet = _bullets.Get(); // TODO: Move logic to player shooter 
 
-        private void ShootBullet() => _player.Shooter.Shoot(_currentBullet.Data);
+        private void ShootBullet() => // TODO: Add check on required bullet size
+            _player.Shooter.Shoot(_currentBullet.Data);
 
-        private void ConvertPlayerSizeToBullet() => _player.SizeConverter.Convert(_currentBullet.Data,
-            _currentBullet.Data.Config.CreationSpeed * Time.deltaTime);
+        private void ConvertPlayerSizeToBullet() => // TODO: Add restriction about min player size
+            _player.SizeConverter.Convert(_currentBullet.Data,
+                _currentBullet.Data.Config.CreationSpeed * Time.deltaTime);
     }
 }

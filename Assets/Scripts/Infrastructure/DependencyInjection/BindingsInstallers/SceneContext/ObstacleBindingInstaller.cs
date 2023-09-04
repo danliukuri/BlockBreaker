@@ -19,6 +19,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
             BindConfigurator();
             BindObstaclesProvider();
             BindData();
+            BindObstacleDestroyer();
         }
 
         private void BindConfig()
@@ -44,7 +45,7 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<ObstaclesProvider>()
                 .AsSingle()
                 .WithArguments(obstacles)
-                .WhenInjectedInto(typeof(SetupGameplayState), typeof(PlayerBulletExploder));
+                .WhenInjectedInto(typeof(SetupGameplayState), typeof(PlayerBulletExploder), typeof(ObstacleDestroyer));
         }
 
         private void BindData()
@@ -53,6 +54,14 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .BindInterfacesAndSelfTo<ObstacleData>()
                 .AsTransient()
                 .WhenInjectedInto<ObstacleDataProvider>();
+        }
+
+        private void BindObstacleDestroyer()
+        {
+            Container
+                .BindInterfacesAndSelfTo<ObstacleDestroyer>()
+                .AsSingle()
+                .WhenInjectedInto<ObstacleConfigurator>();
         }
     }
 }
