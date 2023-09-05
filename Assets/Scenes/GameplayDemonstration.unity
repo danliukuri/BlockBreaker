@@ -406,7 +406,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &234519839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -813,8 +813,8 @@ MonoBehaviour:
   canvas: {fileID: 234519838}
   defeatTextFactoryConfig: {fileID: 11400000, guid: 79636973264c3f24d94020106028fa32, type: 2}
   defeatTextPoolConfig: {fileID: 11400000, guid: 08db31054b68b114093a2e370a373df3, type: 2}
-  victoryTextFactoryConfig: {fileID: 11400000, guid: b15bb3510e4457b46b7fab60d0569e14, type: 2}
-  victoryTextPoolConfig: {fileID: 11400000, guid: c09c64d40dc85a643853cc1dfb42ae55, type: 2}
+  victoryTextFactoryConfig: {fileID: 0}
+  victoryTextPoolConfig: {fileID: 0}
 --- !u!1001 &610162866
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2212,8 +2212,8 @@ SceneRoots:
   - {fileID: 553382427}
   - {fileID: 963194228}
   - {fileID: 705507995}
+  - {fileID: 749806245}
   - {fileID: 1227360474}
   - {fileID: 615351566}
   - {fileID: 895455428}
   - {fileID: 1186572834}
-  - {fileID: 749806245}
