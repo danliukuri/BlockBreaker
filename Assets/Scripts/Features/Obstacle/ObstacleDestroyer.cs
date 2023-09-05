@@ -11,7 +11,10 @@ namespace BlockBreaker.Features.Obstacle
         public void Destroy(ObstacleData obstacle)
         {
             _obstaclesProvider.Obstacles.Remove(obstacle);
-            obstacle.Transform.gameObject.SetActive(false);
+            obstacle.Collider.enabled = false;
+            obstacle.AnimationActivator.Disappear();
+
+            // TODO: Disable after animation using coroutine runner (Return to pool in future)
         }
     }
 }
