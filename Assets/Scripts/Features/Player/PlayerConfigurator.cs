@@ -21,6 +21,7 @@ namespace BlockBreaker.Features.Player
         public void Configure(PlayerDataProvider component)
         {
             _playerData.Transform = component.transform;
+            _playerData.Rigidbody = component.GetComponent<Rigidbody>();
             _playerData.Config = _config;
             _playerData.Size = _config.Size;
             _playerData.Radius = _config.Radius;

@@ -9,6 +9,7 @@ namespace BlockBreaker.Data.Dynamic.Player
     public class PlayerData
     {
         public PlayerConfig Config { get; set; }
+        public Rigidbody Rigidbody { get; set; }
         public Transform Transform { get; set; }
         public Vector3 InitialPosition { get; set; }
         public float Size { get; set; }

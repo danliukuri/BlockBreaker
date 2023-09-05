@@ -15,4 +15,7 @@ MonoBehaviour:
   <HealthPointsToScaleRatio>k__BackingField: 0.2
   <Size>k__BackingField: 0.5
   <SizeReserveProportion>k__BackingField: 0.2
-  <ShootingForce>k__BackingField: 10
+  <ShootingForce>k__BackingField: 30
+  <MovingForce>k__BackingField: 2
+  <JumpingForce>k__BackingField: 5
+  <GoalDirection>k__BackingField: {x: 0, y: 0, z: 1}

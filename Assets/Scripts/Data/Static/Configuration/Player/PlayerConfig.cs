@@ -14,5 +14,8 @@ namespace BlockBreaker.Data.Static.Configuration.Player
         public float SizeReserveProportion { get; private set; }
 
         [field: SerializeField, Min(default)] public float ShootingForce { get; set; }
+        [field: SerializeField, Min(default)] public float MovingForce { get; set; }
+        [field: SerializeField, Min(default)] public float JumpingForce { get; set; }
+        [field: SerializeField, Min(default)] public Vector3 GoalDirection { get; set; }
     }
 }
