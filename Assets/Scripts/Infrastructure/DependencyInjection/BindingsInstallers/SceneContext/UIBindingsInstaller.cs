@@ -15,12 +15,18 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
         [SerializeField] private FactoryConfig defeatTextFactoryConfig;
         [SerializeField] private PoolConfig defeatTextPoolConfig;
 
+        [SerializeField] private FactoryConfig victoryTextFactoryConfig;
+        [SerializeField] private PoolConfig victoryTextPoolConfig;
+
         public override void InstallBindings()
         {
             BindConfigurator();
 
             BindDefeatTextFactory();
             BindDefeatTextObjectPool();
+            
+            BindVictoryTextFactory();
+            BindVictoryTextObjectPool();
         }
 
         private void BindConfigurator()
@@ -56,6 +62,32 @@ namespace BlockBreaker.Infrastructure.DependencyInjection.BindingsInstallers.Sce
                 .Bind<IObjectPool<DefeatTextMarker>>()
                 .To<ObjectPool<DefeatTextMarker>>()
                 .FromFactory<ComponentPoolFactory<DefeatTextMarker>>()
+                .AsCached();
+        }
+
+        private void BindVictoryTextFactory()
+        {
+            Container
+                .BindInterfacesTo<FactoryConfig>()
+                .FromScriptableObject(victoryTextFactoryConfig)
+                .AsCached()
+                .WhenInjectedInto<ComponentFactory<VictoryTextMarker>>();
+
+            Container.BindInterfacesTo<ComponentFactory<VictoryTextMarker>>().AsCached();
+        }
+
+        private void BindVictoryTextObjectPool()
+        {
+            Container
+                .BindInterfacesTo<PoolConfig>()
+                .FromScriptableObject(victoryTextPoolConfig)
+                .AsCached()
+                .WhenInjectedInto<ComponentPoolFactory<VictoryTextMarker>>();
+
+            Container
+                .Bind<IObjectPool<VictoryTextMarker>>()
+                .To<ObjectPool<VictoryTextMarker>>()
+                .FromFactory<ComponentPoolFactory<VictoryTextMarker>>()
                 .AsCached();
         }
     }

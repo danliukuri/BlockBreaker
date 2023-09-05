@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BlockBreaker.Features.UI
 {
-    public class UIConfigurator : IComponentConfigurator<DefeatTextMarker>
+    public class UIConfigurator : IComponentConfigurator<DefeatTextMarker>, IComponentConfigurator<VictoryTextMarker>
     {
         private readonly GameObject _canvas;
         private readonly Transform _uiRoot;
@@ -15,6 +15,8 @@ namespace BlockBreaker.Features.UI
         }
 
         public void Configure(DefeatTextMarker component) => Configure(component.transform);
+
+        public void Configure(VictoryTextMarker component) => Configure(component.transform);
 
         private void Configure(Transform transform)
         {
