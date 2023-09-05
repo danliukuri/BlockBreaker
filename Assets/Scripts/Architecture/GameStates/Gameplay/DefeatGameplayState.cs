@@ -1,9 +1,15 @@
-﻿using BlockBreaker.Utilities.Patterns.State;
+﻿using BlockBreaker.Features.UI;
+using BlockBreaker.Utilities.Patterns.State;
+using UnityEngine.Pool;
 
 namespace BlockBreaker.Architecture.GameStates.Gameplay
 {
     public class DefeatGameplayState : IEnterableState
     {
-        public void Enter() => UnityEngine.Debug.Log("Defeat");
+        private readonly IObjectPool<DefeatTextMarker> _defeatTexts;
+
+        public DefeatGameplayState(IObjectPool<DefeatTextMarker> defeatTexts) => _defeatTexts = defeatTexts;
+
+        public void Enter() => _defeatTexts.Get();
     }
 }
