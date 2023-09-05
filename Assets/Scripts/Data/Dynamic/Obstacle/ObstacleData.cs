@@ -8,7 +8,9 @@ namespace BlockBreaker.Data.Dynamic.Obstacle
     {
         public ObstacleConfig Config { get; set; }
         public Transform Transform { get; set; }
+        public Collider Collider { get; set; }
 
         public ObstacleDestroyer Destroyer { get; set; }
+        public IObstacleAnimationActivator AnimationActivator { get; set; }
     }
 }
