@@ -12,9 +12,8 @@ namespace BlockBreaker.Features.Player.Bullet
 
         private void OnCollisionEnter(Collision other)
         {
-            if(!_bulletProvider.Data.IsDestroyed)
-                if (other.gameObject.TryGetComponent(out ObstacleDataProvider obstacleProvider))
-                    _bulletProvider.Data.Exploder.Explode(_bulletProvider);
+            if (other.gameObject.TryGetComponent(out ObstacleDataProvider obstacleProvider))
+                _bulletProvider.Data.Exploder.Explode(_bulletProvider);
         }
     }
 }

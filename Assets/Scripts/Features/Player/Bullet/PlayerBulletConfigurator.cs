@@ -27,11 +27,13 @@ namespace BlockBreaker.Features.Player.Bullet
             bullet.InitialPosition = ConfigureInitialPosition();
             bullet.Transform = ConfigureTransform(component.transform, bullet);
             bullet.Rigidbody = component.GetComponent<Rigidbody>();
+            // bullet.Collider = component.GetComponent<Collider>();
             bullet.Config = _config;
             bullet.Size = _config.Size;
             bullet.Radius = _config.Radius;
             bullet.Destroyer = _bulletDestroyer;
             bullet.Exploder = _bulletExploder;
+            // bullet.AnimationActivator = new PlayerBulletAnimationActivator(component.GetComponent<Animator>());
         }
 
         private Vector3 ConfigureInitialPosition() =>

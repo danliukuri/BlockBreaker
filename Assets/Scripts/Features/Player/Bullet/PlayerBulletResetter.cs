@@ -10,8 +10,9 @@ namespace BlockBreaker.Features.Player.Bullet
         {
             PlayerBulletData bullet = component.Data;
             bullet.Transform.Reset();
+            // bullet.Rigidbody.isKinematic = false;
             bullet.Rigidbody.Reset();
-            bullet.IsDestroyed = false;
+            // bullet.Collider.enabled = true;
         }
     }
 }
